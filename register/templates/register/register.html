@@ -1,0 +1,44 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- Inner page header container -->
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Sign Up</h2>
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Sign Up</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <!-- Inner page container -->
+    <section class="inner-page">
+        <div class="d-flex justify-content-center h-100">
+            <div class="d-flex justify-content-center">
+                <div class="container">
+                    <div class="d-flex justify-content-center">
+                        <div class="section-title">
+                            <p>Sign Up</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="box" data-aos="zoom-in" data-aos-delay="100">
+                            <form method="POST" class="form-group">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-success">Register</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}
