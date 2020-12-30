@@ -17,7 +17,14 @@ def home(request):
 
 def store(request):
     products = Product.objects.all()
-    return render(request, 'store/store.html', {'products': products})
+    starters=Product.objects.filter(category='Starter')
+    salads=Product.objects.filter(category='Salad')
+    specialties=Product.objects.filter(category='Specialty')
+    desserts=Product.objects.filter(category='Dessert')
+    drinks=Product.objects.filter(category='Drink')
+
+    context={'products': products, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks}
+    return render(request, 'store/store.html', context)
 
 
 def cart(request):

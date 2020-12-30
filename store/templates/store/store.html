@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h2>Store </h2>
                 <ol>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="{% url 'home' %}">Home</a></li>
                     <li>Store</li>
                 </ol>
             </div>
@@ -61,58 +61,76 @@
                                                 </div>
                                             </div>
                                             <hr>
-
-
-
-
                                             <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
-                                                {% for product in products %}
-                                                {% if product.category == 'Starter' %}
+                                                {% for starter in starters %}
                                                 <div class="col-lg-6 menu-item filter-starters">
-                                                    <img src="{{product.image.url}}" class="menu-img" alt="">
+                                                    <img src="{{starter.image.url}}" class="menu-img" alt="">
                                                     <div class="menu-content">
-                                                        <a href="#">{{product.name}}</a><span>${{product.price|floatformat:2}}</span>
-                                                      </div>
+                                                        <a href="#">{{starter.name}}</a><span>${{starter.price|floatformat:2}}</span>
+                                                    </div>
                                                     <div class="menu-ingredients">
-                                                        {{product.description}}
+                                                        {{starter.description}}
                                                     </div>
-                                                     <div class="btns">
-                                                        <button class="btn btn-sm btn-dark btn-outline-secondary add-btn" style="float: right;" >Add to Cart</button>
+                                                    <div class="btns">
+                                                        <button class="btn btn-sm btn-dark btn-outline-secondary add-btn" style="float: right;">Add to Cart</button>
                                                     </div>
-                                                </div> 
-                                                {% endif %}
+                                                </div>
                                                 {% endfor %}
-                                                {% for product in products %}
-                                                {% if product.category == 'Specialty' %}
+                                                {% for salad in salads %}
+                                                <div class="col-lg-6 menu-item filter-salad">
+                                                    <img src="{{salad.image.url}}" class="menu-img" alt="">
+                                                    <div class="menu-content">
+                                                        <a href="#">{{salad.name}}</a><span>${{salad.price|floatformat:2}}</span>
+                                                    </div>
+                                                    <div class="menu-ingredients">
+                                                        {{salad.description}}
+                                                    </div>
+                                                    <div class="btns">
+                                                        <button class="btn btn-sm btn-dark btn-outline-secondary add-btn" style="float: right;">Add to Cart</button>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                                {% for specialty in specialties %}
                                                 <div class="col-lg-6 menu-item filter-specialty">
-                                                    <img src="{{product.image.url}}" class="menu-img" alt="">
+                                                    <img src="{{specialty.image.url}}" class="menu-img" alt="">
                                                     <div class="menu-content">
-                                                        <a href="#">{{product.name}}</a><span>${{product.price}}</span>
+                                                        <a href="#">{{specialty.name}}</a><span>${{specialty.price|floatformat:2}}</span>
                                                     </div>
                                                     <div class="menu-ingredients">
-                                                        {{product.description}}
+                                                        {{specialty.description}}
                                                     </div>
                                                     <div class="btns">
-                                                        <button class="btn btn-sm btn-dark btn-outline-secondary add-btn" style="float: right;" >Add to Cart</button>
+                                                        <button class="btn btn-sm btn-dark btn-outline-secondary add-btn" style="float: right;">Add to Cart</button>
                                                     </div>
                                                 </div>
-                                                {% endif %}
                                                 {% endfor %}
-                                                {% for product in products %}
-                                                {% if product.category == 'Dessert' %}
+                                                {% for dessert in desserts %}
                                                 <div class="col-lg-6 menu-item filter-desserts">
-                                                    <img src="{{product.image.url}}" class="menu-img" alt="">
+                                                    <img src="{{dessert.image.url}}" class="menu-img" alt="">
                                                     <div class="menu-content">
-                                                        <a href="#">{{product.name}}</a><span>${{product.price}}</span>
+                                                        <a href="#">{{dessert.name}}</a><span>${{dessert.price|floatformat:2}}</span>
                                                     </div>
                                                     <div class="menu-ingredients">
-                                                        {{product.description}}
+                                                        {{dessert.description}}
                                                     </div>
                                                     <div class="btns">
-                                                        <button class="btn btn-sm btn-dark btn-outline-secondary add-btn" style="float: right;" >Add to Cart</button>
+                                                        <button class="btn btn-sm btn-dark btn-outline-secondary add-btn" style="float: right;">Add to Cart</button>
                                                     </div>
                                                 </div>
-                                                {% endif %}
+                                                {% endfor %}
+                                                {% for drink in drinks %}
+                                                <div class="col-lg-6 menu-item filter-drinks">
+                                                    <img src="{{drink.image.url}}" class="menu-img" alt="">
+                                                    <div class="menu-content">
+                                                        <a href="#">{{drink.name}}</a><span>${{drink.price|floatformat:2}}</span>
+                                                    </div>
+                                                    <div class="menu-ingredients">
+                                                        {{drink.description}}
+                                                    </div>
+                                                    <div class="btns">
+                                                        <button class="btn btn-sm btn-dark btn-outline-secondary add-btn" style="float: right;">Add to Cart</button>
+                                                    </div>
+                                                </div>
                                                 {% endfor %}
                                                 <div class="col-lg-6 menu-item filter-specialty">
                                                     <img src="{% static 'assets/img/menu/bread-barrel.jpg' %}" class="menu-img" alt="">
