@@ -3,7 +3,7 @@ from .forms import RegisterForm
  
  
 # Create your views here.
-def registerView(response):
+def register(response):
     if response.method == 'POST':
         form = RegisterForm(response.POST)
         if form.is_valid():

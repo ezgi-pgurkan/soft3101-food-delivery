@@ -28,6 +28,10 @@
 
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">
+  
+  <script type="text/javascript">
+    var user='{{request.user}}'
+  </script>
 
   <!-- =======================================================
   * Template Name: Restaurantly - v1.2.0
@@ -47,6 +51,7 @@
 
 {% endblock %}
 
+
 {% include 'store/footer.html' %}
 
 
@@ -65,6 +70,7 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+  <script src="{% static 'assets/js/cart.js' %}"></script>
 
 </body>
 

@@ -18,7 +18,7 @@
     <section class="inner-page">
         <div class="container">
             <a href="{% url 'store' %}">
-                <button class="btn btn-sm btn-dark btn-outline-secondary">&#x2190; Continue Shopping</button>
+                <button class="btn btn-sm btn-outline-light">&#x2190; Continue Shopping</button>
             </a>
             <hr>
             <div class="d-flex justify-content-center">
@@ -30,12 +30,17 @@
                         <!-- <h5>From: {{item.product.restaurant.name}}</h5>  HUGE PROBLEM - DONT LET CUSTOMERS ADD PRODUCTS FROM MULTIPLE RESTAURANTS TO A CART -->
                         <div class="cart-row">
                             <section id="menu" class="menu section-bg">
-                                <img src="{{item.product.image.url}}" class="menu-img" alt="">
-                                <div class="menu-content">
-                                    <a href="#">{{item.product.name}}</a><span>${{item.product.price|floatformat:2}}</span>
-                                </div>
-                                <div class="menu-ingredients">
-                                    x{{item.quantity}}
+                                <div class="container">
+                                    <img src="{{item.product.image.url}}" class="menu-img" alt="">
+                                    <div class="menu-content">
+                                        <a href="#">{{item.product.name}}</a><span>${{item.product.price|floatformat:2}}</span>
+                                    </div>
+                                    <div class="menu-ingredients">
+                                        <h4>&#215; {{item.quantity}}</h4>
+                                    </div>
+                                    <div class="menu-ingredients">
+                                        <button class="btn btn-sm btn-outline-danger delete-btn" style="float: right;">Remove from Cart</button>
+                                    </div>
                                 </div>
                             </section>
                         </div>

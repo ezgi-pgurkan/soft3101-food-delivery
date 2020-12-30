@@ -19,6 +19,23 @@ class Customer(models.Model):
     def __str__(self):
         return self.email
 
+class Tag(models.Model):
+    ASIAN ='Asian'
+    FASTFOOD = 'FastFood'
+    DESSERTS = 'Desserts'
+    BAKERY = 'Bakery'
+    PIZZA = 'Pizza'
+    TAGS = [
+        (ASIAN, 'Asian'),
+        (FASTFOOD, 'FastFood'),
+        (DESSERTS, 'Dessert'),
+        (BAKERY, 'Bakery'),
+        (PIZZA, 'Pizza'),
+    ]
+    tag = models.CharField(max_length=200, null=True, choices=TAGS) 
+
+    def __str__(self):
+        return self.tag
 
 class Restaurant(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
@@ -38,10 +55,11 @@ class Restaurant(models.Model):
     workingHoursTo = models.CharField(max_length=200, null=True, blank=True)
     workingDaysFrom = models.CharField(max_length=200, null=True, blank=True)
     workingDaysTo = models.CharField(max_length=200, null=True, blank=True)
+    tags=models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name
-
+  
 
 class Product(models.Model):                              
     STARTER ='Starter'
