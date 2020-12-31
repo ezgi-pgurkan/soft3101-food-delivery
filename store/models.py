@@ -4,6 +4,22 @@ from decimal import Decimal
 
 # Create your models here.
 
+class City(models.Model):
+    ISTANBUL='Istanbul'
+    ANKARA='Ankara'
+    IZMIR='Izmir'
+    ANTALYA='Antalya'
+    CITIES = [ 
+        (ISTANBUL, 'Istanbul'),
+        (ANKARA, 'Ankara'),
+        (IZMIR, 'Izmir'),
+        (ANTALYA, 'Antalya'),
+    ]
+    city=models.CharField(max_length=200, null=True, choices=CITIES) 
+
+    def __str__(self):
+        return self.city
+
 class Customer(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
@@ -13,7 +29,7 @@ class Customer(models.Model):
     password = models.CharField(max_length=200, null=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     phone= models.CharField(max_length=10, null=True)
-    city = models.CharField(max_length=200, null=True, blank=True) 
+    city = models.ForeignKey(City, null=True, blank=True, on_delete=models.CASCADE)
     address = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
@@ -41,8 +57,8 @@ class Restaurant(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200)
-    city = models.CharField(max_length=200)
-    address1 = models.CharField(max_length=300, null=True, blank=True)
+    city = models.ForeignKey(City, null=True, blank=True, on_delete=models.CASCADE)
+    address = models.CharField(max_length=300, null=True, blank=True)
     rate = models.DecimalField(null=True, blank=True, max_digits=2, decimal_places=1, default=Decimal(0.0))
     rateCount = models.IntegerField(null=True, blank=True, default=0)
     image1 = models.ImageField(default='defaultClient.jpg', upload_to='client_pics')
