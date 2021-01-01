@@ -35,7 +35,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.email
 
-class Tag(models.Model):
+class Tag(models.Model): 
     ASIAN ='Asian'
     FASTFOOD = 'FastFood'
     DESSERTS = 'Desserts'
@@ -53,8 +53,12 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag
 
-class Restaurant(models.Model):
+class RestaurantOwner(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    restaurant= models.OneToOneField(Restaurant, null=True, blank=True, on_delete=models.CASCADE)
+
+
+class Restaurant(models.Model):
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200)
     city = models.ForeignKey(City, null=True, blank=True, on_delete=models.CASCADE)
