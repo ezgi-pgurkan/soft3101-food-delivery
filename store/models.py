@@ -53,10 +53,6 @@ class Tag(models.Model):
     def __str__(self):
         return self.tag
 
-class RestaurantOwner(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-    restaurant=models.OneToOneField(Restaurant, null=True, blank=True, on_delete=models.CASCADE)
-
 class Restaurant(models.Model):
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200)
@@ -78,6 +74,12 @@ class Restaurant(models.Model):
 
     def __str__(self):
         return self.name
+
+class RestaurantOwner(models.Model):
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    restaurant=models.OneToOneField(Restaurant, null=True, blank=True, on_delete=models.CASCADE)
+
+
   
 
 class Product(models.Model):                              
