@@ -79,6 +79,7 @@ class RestaurantOwner(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     restaurant=models.OneToOneField(Restaurant, null=True, blank=True, on_delete=models.CASCADE)
 
+
 class Product(models.Model):                              
     STARTER ='Starter'
     SALAD = 'Salad'
