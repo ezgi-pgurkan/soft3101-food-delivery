@@ -35,7 +35,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.email
 
-class Tag(models.Model):
+class Tag(models.Model): 
     ASIAN ='Asian'
     FASTFOOD = 'FastFood'
     DESSERTS = 'Desserts'
