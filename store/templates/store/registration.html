@@ -1,0 +1,171 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Inner page header container -->
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Registration</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>Registration</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <!-- Inner page container -->
+    <section class="inner-page">
+        <div class="container">
+            <!-- ======= Book A Table Section ======= -->
+            <section id="book-a-table" class="book-a-table">
+                <div class="container" data-aos="fade-up">
+                    <div class="section-title">
+                        <h2>Fill the form to</h2>
+                        <p>Register Your Restaurant</p>
+                    </div>
+                    <form action="{% url 'application' %}" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="col-lg-4 col-md-6 form-group">
+                                <h3>Restaurant Info</h3>
+                                <hr class="white">
+                                <div>
+                                    <h6>Restaurant Name*</h6>
+                                    <input type="text" name="restaurantName" class="form-control" placeholder="Enter restaurant name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
+                                    <div class="validate"></div>
+                                </div>
+                                <br>
+                                <div>
+                                    <h6>City*</h6>
+                                    <select name="restaurantCity" class="form-control" required>
+                                        <option disabled selected value>Select a city</option>
+                                        <option value="Istanbul">Istanbul</option>
+                                        <option value="Ankara">Ankara</option>
+                                        <option value="Izmir">Izmir</option>
+                                        <option value="Antalya">Antalya</option>
+                                    </select>
+                                    <div class="validate"></div>
+                                </div>
+                                <br>
+                                <h6>Restaurant Phone*</h6>
+                                <div>
+                                    <input type="text" name="restaurantPhone" class="form-control" placeholder="Enter restaurant phone" data-rule="minlen:4" data-msg="Please enter at least 10 integers" required>
+                                    <div class="validate"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 form-group">
+                                <h3>Contact Info</h3>
+                                <hr class="white">
+                                <div>
+                                    <h6>Restaurant Owner's Name*</h6>
+                                    <input type="text" name="restaurantOwnerName" class="form-control" placeholder="Enter restaurant owner's name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
+                                    <div class="validate"></div>
+                                </div>
+                                <br>
+                                <div>
+                                    <h6>Restaurant Owner's Surname*</h6>
+                                    <input type="text" name="restaurantOwnerSurname" class="form-control" placeholder="Enter restaurant owner's surname" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
+                                    <div class="validate"></div>
+                                </div>
+                                <br>
+                                <div>
+                                    <h6>Restaurant Owner's Email*</h6>
+                                    <input type="email" name="restaurantOwnerEmail" class="form-control" placeholder="Enter restaurant owner's email" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
+                                    <div class="validate"></div>
+                                </div>
+                                <br>
+                                <div>
+                                    <h6>Restaurant Owner's Phone*</h6>
+                                    <input type="text" name="restaurantOwnerPhone" class="form-control" placeholder="Enter restaurant owner's phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
+                                    <div class="validate"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 form-group">
+                                <h3>Timing Info</h3>
+                                <hr class="white">
+                                <div>
+                                    <h6>Working Days</h6>
+                                    <div>
+                                        <select name="workingDaysFrom" class="form-control" placeholder="From" required>
+                                            <option disabled selected value>From</option>
+                                            <option value="Monday">Monday</option>
+                                            <option value="Tuesday">Tuesday</option>
+                                            <option value="Wednesday">Wednesday</option>
+                                            <option value="Thursday">Thursday</option>
+                                            <option value="Friday">Friday</option>
+                                            <option value="Saturday">Saturday</option>
+                                            <option value="Sunday">Sunday</option>
+                                        </select>
+                                        <div class="validate"></div>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <select name="workingDaysTo" class="form-control" placeholder="To" required>
+                                            <option disabled selected value>To</option>
+                                            <option value="Monday">Monday</option>
+                                            <option value="Tuesday">Tuesday</option>
+                                            <option value="Wednesday">Wednesday</option>
+                                            <option value="Thursday">Thursday</option>
+                                            <option value="Friday">Friday</option>
+                                            <option value="Saturday">Saturday</option>
+                                            <option value="Sunday">Sunday</option>
+                                        </select>
+                                        <div class="validate"></div>
+                                    </div>
+                                    <br>
+                                    <h6>Working Hours</h6>
+                                    <div>
+                                        <select name="workingHoursFrom" class="form-control" placeholder="From" required>
+                                            <option disabled selected value>From</option>
+                                            <option value="00:00">00:00</option>
+                                            <option value="01:00">01:00</option>
+                                            <option value="02:00">02:00</option>
+                                            <option value="03:00">03:00</option>
+                                            <option value="04:00">04:00</option>
+                                            <option value="05:00">05:00</option>
+                                            <option value="06:00">06:00</option>
+                                            <option value="07:00">07:00</option>
+                                            <option value="08:00">08:00</option>
+                                            <option value="09:00">09:00</option>
+                                            <option value="10:00">10:00</option>
+                                            <option value="11:00">11:00</option>
+                                        </select>
+                                        <div class="validate"></div>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <select name="workingHoursTo" class="form-control" placeholder="To" required>
+                                            <option disabled selected value>From</option>
+                                            <option value="12:00">12:00</option>
+                                            <option value="13:00">13:00</option>
+                                            <option value="14:00">14:00</option>
+                                            <option value="15:00">15:00</option>
+                                            <option value="16:00">16:00</option>
+                                            <option value="17:00">17:00</option>
+                                            <option value="18:00">18:00</option>
+                                            <option value="19:00">19:00</option>
+                                            <option value="20:00">20:00</option>
+                                            <option value="21:00">21:00</option>
+                                            <option value="22:00">22:00</option>
+                                            <option value="23:00">23:00</option>
+                                        </select>
+                                        <div class="validate"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="white">
+                        <div class="mb-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
+                        </div>
+                        <div class="text-center"><button type="submit"> Register </button></div>
+                    </form>
+                </div>
+            </section><!-- End Book A Table Section -->
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}

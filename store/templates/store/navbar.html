@@ -21,9 +21,33 @@
           <li><a href="{% url 'login' %}">Sign In</a></li>
           <li><a href="{% url 'signout' %}">Sign Out</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li class="book-a-table text-center"><a href="#book-a-table">Book a table</a></li>
+          <li class="book-a-table text-center"><a href="{% url 'registration' %}">Become A Partner</a></li>
         </ul>
       </nav><!-- .nav-menu -->
 
     </div>
   </header><!-- End Header -->
+
+
+<!-- End Header 
+  '''
+def idk(request):
+    if request.method=="POST":
+        return render(request, 'store/idk.html', {})
+
+    else:
+        return render(request, 'store/registerRestaurant.html', {})
+
+        
+        message_name=request.POST['message_name']
+        message_email=request.POST['message_email']
+        message=request.POST['message']    
+
+        send_mail(
+            message_name,
+            message,
+            message_email,
+            ['ezgi.pgurkanx@gmail.com']
+            )
+'''
+-->
