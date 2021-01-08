@@ -15,5 +15,10 @@ urlpatterns = [
     path('profile/', views.profile, name="profile"),
     path('registration/', views.registration, name="registration"),
     path('application/', views.application, name="application"),
+    path('update_item/', views.updateItem, name="update_item"), #yeni eklenen
+    path('process_order/', views.processOrder, name="process_order"), #yeni eklenen
+
+
+
 ]
 

@@ -17,6 +17,10 @@
     <!-- Inner page container -->
     <section class="inner-page">
         <div class="container">
+            <a href="{% url 'cart' %}">
+            <img src="{% static 'images/cart2.png' %}" height="50" weight="50">
+            </a>
+                <p id="cart-total">{{cartItems}}</p> 
             <!-- ======= Specials Section ======= -->
             <section id="specials" class="specials">
                 <div class="container" data-aos="fade-up">

@@ -17,6 +17,10 @@
     <!-- Inner page container -->
     <section class="inner-page">
         <div class="container">
+            <a href="{% url 'cart' %}">
+            <img src="{% static 'images/cart2.png' %}" height="50" weight="50">
+            </a>
+                <p id="cart-total">{{cartItems}}</p> 
             <a href="{% url 'store' %}">
                 <button class="btn btn-sm btn-outline-light">&#x2190; Continue Shopping</button>
             </a>
@@ -37,7 +41,16 @@
                                     </div>
                                     <div class="menu-ingredients">
                                         <h4>&#215; {{item.quantity}}</h4>
+                                        <div class="quantity">
+                            <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}"  height="20" weight="20" >
+                            
+                            <p> </p>
+                            <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}"  height="20" weight="20">
+                        </div>
+
                                     </div>
+
+
                                     <div class="menu-ingredients">
                                         <button class="btn btn-sm btn-outline-danger delete-btn" style="float: right;">Remove from Cart</button>
                                     </div>

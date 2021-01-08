@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse #yeni eklenen 
+import json #yeni eklenen 
+import datetime #yeni eklenen
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from django.views.generic import TemplateView
@@ -20,6 +23,17 @@ def home(request):
 
 
 def store(request):
+
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items 
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0, 'shipping': False}
+        cartItems = order['get_cart_items']#available for guest users???
+
     products = Product.objects.all()
     starters=Product.objects.filter(category='Starter')
     salads=Product.objects.filter(category='Salad')
@@ -27,7 +41,7 @@ def store(request):
     desserts=Product.objects.filter(category='Dessert')
     drinks=Product.objects.filter(category='Drink')
 
-    context={'products': products, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks}
+    context={'products': products, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks}
     return render(request, 'store/store.html', context)
 
 
@@ -36,11 +50,13 @@ def cart(request):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
+        cartItems = order.get_cart_items # we'll set that to the logged in user 
     else:
         items = []
-        order = {'get_cart_total':0, 'get_cart_items':0}
+        order = {'get_cart_total':0, 'get_cart_items':0,'shipping': False}
+        cartItems = order['get_cart_items']#available for guest users??? we'll set that to the guest in user 
 
-    context = {'items':items, 'order':order}
+    context = {'items':items, 'order':order, 'cartItems': cartItems} #and we need to pass that in
     return render(request, 'store/cart.html', context)
 
 def checkout(request):
@@ -48,11 +64,13 @@ def checkout(request):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
+        cartItems = order.get_cart_items # we'll set that to the logged in user 
     else:
         items = []
-        order = {'get_cart_total':0, 'get_cart_items':0}
+        order = {'get_cart_total':0, 'get_cart_items':0, 'shipping': False}
+        cartItems = order['get_cart_items']#available for guest users??? we'll set that to the guest in user 
 
-    context = {'items':items, 'order':order}
+    context = {'items':items, 'order':order, 'cartItems': cartItems}
     return render(request, 'store/checkout.html', context)
 
 def profile(request):
@@ -96,3 +114,63 @@ def application(request):
         return render(request, 'store/application.html', context)
     else:
         return render(request, 'store/registration.html', {})
+
+
+def updateItem(request): #yeni eklenen
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+
+    print('Action:', action)
+    print('Product:', productId)
+
+
+    customer = request.user.customer
+    product = Product.objects.get(id=productId)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product) ###BAKKKKKK!!!!
+
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)
+
+    orderItem.save()
+
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+
+    return JsonResponse('Item was added',  safe=False)
+
+
+def processOrder(request):
+        transaction_id = datetime.datetime.now().timestamp()
+        data = json.loads(request.body)
+
+        if request.user.is_authenticated:
+            customer = request.user.customer
+            order, created = Order.objects.get_or_create(customer=customer, complete=False)
+            total = float(data['form']['total'])
+            order.transaction_id = transaction_id
+
+            if total == order.get_cart_total:
+                order.complete = True
+            order.save()
+
+            if order.shipping == True:
+                ShippingAddress.objects.create(
+                    customer=customer,
+                    order=order,
+                    address=data['shipping']['address'],
+                    city=data['shipping']['city'],
+                    state=data['shipping']['state'],
+                    zipcode=data['shipping']['zipcode']
+
+                    )
+            
+
+        else:
+            print('User is not logged in..')    
+        return JsonResponse('Payment complete!',  safe=False)
+
