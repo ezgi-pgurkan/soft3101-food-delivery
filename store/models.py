@@ -95,7 +95,6 @@ class Product(models.Model):
     ]
     name = models.CharField(max_length=200, null=True)
     price = models.FloatField(null=True)
-    digital = models.BooleanField(default=False,null=True, blank=True)
     description = models.CharField(max_length=500, null=True, blank=True)
     category=models.CharField(max_length=200, null=True, choices=FOOD_CATEGORIES)
     image = models.ImageField(default='static/assets/img/menu/default-product.jpg', upload_to='static/assets/img/menu')
@@ -126,9 +125,8 @@ class Order(models.Model):
         shipping = False
         orderitems = self.orderitem_set.all()
         for i in orderitems:
-            if i.product.digital == False: #and if there is a single product in our order that has digital set to false
-                shipping = True            # which means that its a physical item let's go ahead and set shipping to true
-        return shipping                    # and that means yes there is an item in here that's need to be shipped.
+                shipping = True          
+        return shipping                   
 
     @property
     def get_cart_total(self):
