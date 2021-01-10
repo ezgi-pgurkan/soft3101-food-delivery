@@ -11,6 +11,9 @@ hr.white {
   color: # #ffffff;
 }
 
+tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
 
 .box-element{
 	box-shadow:hsl(0, 0%, 80%) 0 0 16px;

@@ -1,0 +1,45 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- Inner page header container -->
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Sign In</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>Sign In</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <!-- Inner page container -->
+    <section class="inner-page">
+        <div class="d-flex justify-content-center h-100">
+            <div class="d-flex justify-content-center">
+                <div class="container">
+                    <div class="d-flex justify-content-center">
+                        <div class="section-title">
+                            <p>Sign In</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="box" data-aos="zoom-in" data-aos-delay="100">
+                            <form method="post" class="form-group">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <p>Don't have an account? Create one <a href="{% url 'signup' %}">here</a></p>
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-success">Sign in</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}

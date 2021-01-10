@@ -31,6 +31,10 @@ DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "store.RegisteredUser"
+
+AUTHENTICATION_BACKENDS = ('store.backends.MyAuthBackend','django.contrib.auth.backends.ModelBackend',)
+
 
 # Application definition
 
@@ -43,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "crispy_forms",
     'store.apps.StoreConfig',
-    'register.apps.RegisterConfig',
 ]
 
 MIDDLEWARE = [
@@ -82,8 +85,12 @@ WSGI_APPLICATION = 'HungerZone.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hungerzone',
+        'USER': 'postgres',
+        'PASSWORD': 'hp$nss8+',
+        'HOST': 'localhost',
+        'PORT' : '5432'
     }
 }
 

@@ -1,0 +1,297 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Inner page header container -->
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Store</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>Store</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <!-- Inner page container -->
+    <section class="inner-page">
+        <div class="container">
+            <!-- ======= Specials Section ======= -->
+            <section id="specials" class="specials">
+                <div class="container" data-aos="fade-up">
+                    <div class="section-title">
+                        <h2>Specials</h2>
+                        <p>Check Our Specials</p>
+                    </div>
+                    <div class="row" data-aos="fade-up" data-aos-delay="100">
+                        <div class="col-lg-3">
+                            <ul class="nav nav-tabs flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link active show" data-toggle="tab" href="#tab-1">Menu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tab-2">Reviews</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tab-3">Photos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tab-4">Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tab-5">Add Product</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-9 mt-4 mt-lg-0">
+                            <div class="tab-content">
+                                <div class="tab-pane active show" id="tab-1">
+                                    <!-- ======= Menu Section ======= -->
+                                    <section id="menu" class="menu section-bg">
+                                        <div class="container" data-aos="fade-up">
+                                            <div class="section-title">
+                                                <h2>Menu</h2>
+                                                <p>Check Our Tasty Menu</p>
+                                            </div>
+                                            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                                                <div class="col-lg-12 d-flex justify-content-center">
+                                                    <ul id="menu-flters">
+                                                        <li data-filter="*" class="filter-active">All</li>
+                                                        <li data-filter=".filter-starters">Starters</li>
+                                                        <li data-filter=".filter-salad">Salads</li>
+                                                        <li data-filter=".filter-specialty">Specialty</li>
+                                                        <li data-filter=".filter-desserts">Desserts</li>
+                                                        <li data-filter=".filter-drinks">Drinks</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+                                                {% for product in products %}
+                                                {% if product.category == 'Starter' %}
+                                                <div class="col-lg-6 menu-item filter-starters">
+                                                    <img src="{{product.image.url}}" class="menu-img" alt="">
+                                                    <div class="menu-content">
+                                                        <a>{{product.name}}</a><span>${{product.price|floatformat:2}}</span>
+                                                    </div>
+                                                    <div class="menu-ingredients">
+                                                        {{product.description}}
+                                                    </div>
+                                                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="float: right;">
+                                                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                            <a class="btn btn-sm btn-outline-success update-btn" style="float: right;" href="{% url 'update_product' product.id %}" >Update</a>
+                                                        </div>
+                                                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                                            <a class="btn btn-sm btn-outline-danger delete-btn" style="float: right;" href="{% url 'delete_product' product.id %}" >Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% for product in products %}
+                                                {% if product.category == 'Salad' %}
+                                                <div class="col-lg-6 menu-item filter-salad">
+                                                    <img src="{{product.image.url}}" class="menu-img" alt="">
+                                                    <div class="menu-content">
+                                                        <a>{{product.name}}</a><span>${{product.price|floatformat:2}}</span>
+                                                    </div>
+                                                    <div class="menu-ingredients">
+                                                        {{product.description}}
+                                                    </div>
+                                                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="float: right;">
+                                                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                            <a class="btn btn-sm btn-outline-success update-btn" style="float: right;" href="{% url 'update_product' product.id %}" >Update</a>
+                                                        </div>
+                                                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                                            <a class="btn btn-sm btn-outline-danger delete-btn" style="float: right;" href="{% url 'delete_product' product.id %}" >Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% for product in products %}
+                                                {% if product.category == 'Specialty' %}
+                                                <div class="col-lg-6 menu-item filter-specialty">
+                                                    <img src="{{product.image.url}}" class="menu-img" alt="">
+                                                    <div class="menu-content">
+                                                        <a>{{product.name}}</a><span>${{product.price|floatformat:2}}</span>
+                                                    </div>
+                                                    <div class="menu-ingredients">
+                                                        {{product.description}}
+                                                    </div>
+                                                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="float: right;">
+                                                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                            <a class="btn btn-sm btn-outline-success update-btn" style="float: right;" href="{% url 'update_product' product.id %}" >Update</a>
+                                                        </div>
+                                                         <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                                            <a class="btn btn-sm btn-outline-danger delete-btn" style="float: right;" href="{% url 'delete_product' product.id %}" >Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% for product in products %}
+                                                {% if product.category == 'Dessert' %}
+                                                <div class="col-lg-6 menu-item filter-desserts">
+                                                    <img src="{{product.image.url}}" class="menu-img" alt="">
+                                                    <div class="menu-content">
+                                                        <a>{{product.name}}</a><span>${{product.price|floatformat:2}}</span>
+                                                    </div>
+                                                    <div class="menu-ingredients">
+                                                        {{product.description}}
+                                                    </div>
+                                                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="float: right;">
+                                                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                            <a class="btn btn-sm btn-outline-success update-btn" style="float: right;" href="{% url 'update_product' product.id %}" >Update</a>
+                                                        </div>
+                                                         <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                                            <a class="btn btn-sm btn-outline-danger delete-btn" style="float: right;" href="{% url 'delete_product' product.id %}" >Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% for product in products %}
+                                                {% if product.category == 'Drink' %}
+                                                <div class="col-lg-6 menu-item filter-drinks">
+                                                    <img src="{{product.image.url}}" class="menu-img" alt="">
+                                                    <div class="menu-content">
+                                                        <a>{{product.name}}</a><span>${{product.price|floatformat:2}}</span>
+                                                    </div>
+                                                    <div class="menu-ingredients">
+                                                        {{product.description}}
+                                                    </div>
+                                                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="float: right;">
+                                                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                           <a class="btn btn-sm btn-outline-success update-btn" style="float: right;" href="{% url 'update_product' product.id %}" >Update</a>
+                                                        </div>
+                                                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                                            <a class="btn btn-sm btn-outline-danger delete-btn" style="float: right;" href="{% url 'delete_product' product.id %}" >Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                                <div class="col-lg-6 menu-item filter-specialty">
+                                                    <img src="{% static 'assets/img/menu/bread-barrel.jpg' %}" class="menu-img" alt="">
+                                                    <div class="menu-content">
+                                                        <a>Bread Barrel</a><span>$6.95</span>
+                                                    </div>
+                                                    <div class="menu-ingredients">
+                                                        Lorem, deren, trataro, filede, nerada
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section><!-- End Menu Section -->
+                                </div>
+                                <div class="tab-pane" id="tab-2">
+                                    <div class="row">
+                                        <div class="col-lg-8 details order-2 order-lg-1">
+                                            <h3>Et blanditiis nemo veritatis excepturi</h3>
+                                            <p class="font-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
+                                            <p>Ea ipsum voluptatem consequatur quis est. Illum error ullam omnis quia et reiciendis sunt sunt est. Non aliquid repellendus itaque accusamus eius et velit ipsa voluptates. Optio nesciunt eaque beatae accusamus lerode pakto madirna desera vafle de nideran pal</p>
+                                        </div>
+                                        <div class="col-lg-4 text-center order-1 order-lg-2">
+                                            <img src="{% static 'assets/img/specials-2.png' %}" alt="" class="img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab-3">
+                                    <div class="row">
+                                        <div class="col-lg-8 details order-2 order-lg-1">
+                                            <h3>Impedit facilis occaecati odio neque aperiam sit</h3>
+                                            <p class="font-italic">Eos voluptatibus quo. Odio similique illum id quidem non enim fuga. Qui natus non sunt dicta dolor et. In asperiores velit quaerat perferendis aut</p>
+                                            <p>Iure officiis odit rerum. Harum sequi eum illum corrupti culpa veritatis quisquam. Neque necessitatibus illo rerum eum ut. Commodi ipsam minima molestiae sed laboriosam a iste odio. Earum odit nesciunt fugiat sit ullam. Soluta et harum voluptatem optio quae</p>
+                                        </div>
+                                        <div class="col-lg-4 text-center order-1 order-lg-2">
+                                            <img src="{% static 'assets/img/specials-3.png' %}" alt="" class="img-fluid">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab-4">
+                                    <div class="row">
+                                        <div class="col-lg-8 details order-2 order-lg-1">
+                                            <table cellpadding="5" style="border: 1px solid white; text-align: center">
+                                                <tr style="border: 1px solid white;">
+                                                    <th>
+                                                        <h6 style="font-size: 17px">Name</h6>
+                                                    </th>
+                                                    <th>
+                                                        <h6 style="font-size: 17px">Surname</h6>
+                                                    </th>
+                                                    <th>
+                                                        <h6 style="font-size: 17px">Address</h6>
+                                                    </th>
+                                                    <th>
+                                                        <h6 style="font-size: 17px">City</h6>
+                                                    </th>
+                                                    <th>
+                                                        <h6 style="font-size: 17px">Phone</h6>
+                                                    </th>
+                                                    <th>
+                                                        <h6 style="font-size: 17px">Transaction Id</h6>
+                                                    </th>
+                                                    <th>
+                                                        <h6 style="font-size: 17px">Date Ordered</h6>
+                                                    </th>
+                                                    <th>
+                                                        <h6 style="font-size: 17px">Order</h6>
+                                                    </th>
+                                                    <th>
+                                                        <h6 style="font-size: 17px">Total</h6>
+                                                    </th>
+                                                </tr>
+                                                {% for order in orders %}
+                                                <tr style="border: 1px solid white;">
+                                                    <td>
+                                                        <h6 style="font-size: 17px">{{order.customer.name}}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 style="font-size: 17px">{{order.customer.surname}}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 style="font-size: 17px">{{order.customer.address}}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 style="font-size: 17px">{{order.customer.city}}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 style="font-size: 17px">{{order.customer.phone}}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 style="font-size: 17px">{{order.transaction_id}}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 style="font-size: 17px">{{order.date_ordered}}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 style="font-size: 14px">{{order.get_cart_item_names}}</h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 style="font-size: 14px">Total: ${{order.get_cart_total|floatformat:2}}</h6>
+                                                    </td>
+                                                <tr>
+                                                    {% endfor %}
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab-5">
+                                    <div class="row">
+                                        <div class="col-lg-8 details order-2 order-lg-1">
+                                            <div class="btn">
+                                                <a class="btn btn-lg btn-outline-success update-btn" href="{% url 'create_product' %}" style="float: center;">Add New Product To Menu</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </section><!-- End Specials Section -->
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}
