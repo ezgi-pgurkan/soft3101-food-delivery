@@ -18,9 +18,9 @@
     <section class="inner-page">
         <div class="container">
             <a href="{% url 'cart' %}">
-            <img src="{% static 'images/cart2.png' %}" height="50" weight="50">
+                <img src="{% static 'images/cart2.png' %}" height="50" weight="50">
             </a>
-                <p id="cart-total">{{cartItems}}</p> 
+            <p id="cart-total">{{cartItems}}</p>
             <!-- ======= Specials Section ======= -->
             <section id="specials" class="specials">
                 <div class="container" data-aos="fade-up">
@@ -148,18 +148,19 @@
                                             </div>
                                         </div>
                                     </section><!-- End Menu Section -->
-                                    
                                 </div>
                                 <div class="tab-pane" id="tab-2">
                                     <div class="row">
-                                        <div class="col-lg-8 details order-2 order-lg-1">
-                                            <h3>Et blanditiis nemo veritatis excepturi</h3>
-                                            <p class="font-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
-                                            <p>Ea ipsum voluptatem consequatur quis est. Illum error ullam omnis quia et reiciendis sunt sunt est. Non aliquid repellendus itaque accusamus eius et velit ipsa voluptates. Optio nesciunt eaque beatae accusamus lerode pakto madirna desera vafle de nideran pal</p>
-                                        </div>
-                                        <div class="col-lg-4 text-center order-1 order-lg-2">
-                                            <img src="{% static 'assets/img/specials-2.png' %}" alt="" class="img-fluid">
-                                        </div>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'add_post' %}"> Add comment</a>
+                                        </li>
+                                        <ul>
+                                            {% for post in posts %}
+                                            <li><a href="{% url 'd-detail' post.pk %}">{{post.title}} - </a> {{post.author}}
+                                                <br />
+                                                {{post.body}}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-3">

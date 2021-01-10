@@ -2,6 +2,7 @@ from django.db import models
 from decimal import Decimal
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+from django.urls import reverse
 # Create your models here.
 
 from django.db import models
@@ -237,4 +238,16 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+
+class Post(models.Model): ###NEWWW
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)
+    body = models.TextField()
+
+    def str(self):
+        return self.title + ' | ' + str(self.author)
+
+    def get_absolute_url(self):
+        return reverse('d-detail', args=(str(self.pk)))
 

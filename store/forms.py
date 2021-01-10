@@ -19,7 +19,6 @@ class CustomerCreationForm(UserCreationForm):
     address=forms.CharField(max_length=500)
     phone=forms.CharField(max_length=200)
 
-
     class Meta:
         model  = RegisteredUser
         fields = ('email', 'username', 'password1', 'password2', 'name', 'surname', 'city', 'address', 'phone')
@@ -40,5 +39,3 @@ class RestaurantForm2(ModelForm):
     class Meta:
         model= Restaurant
         fields = '__all__'
-
-

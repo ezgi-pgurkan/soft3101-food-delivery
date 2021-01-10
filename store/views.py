@@ -14,6 +14,11 @@ from django.core.mail import send_mail
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 from .forms import *
+from .decorators import unauthenticated_user, allowed_users, admin_only
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+from django.views.generic import ListView, DetailView, CreateView#NEWWW
+
 
 # Create your views here.
 
@@ -25,7 +30,8 @@ def home(request):
     restaurants = Restaurant.objects.all()
     return render(request, 'store/home.html', {'restaurants': restaurants})
 
-
+@login_required(login_url='signin')
+#!!!@unauthenticated_user
 def store(request):
 
     if request.user.is_authenticated:
@@ -43,8 +49,10 @@ def store(request):
     specialties=Product.objects.filter(category='Specialty')
     desserts=Product.objects.filter(category='Dessert')
     drinks=Product.objects.filter(category='Drink')
+    posts =Post.objects.all()
+    details = Post.objects.all()
 
-    context={'products': products, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks}
+    context={'products': products, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks,'posts':posts, 'details':details}
     return render(request, 'store/store.html', context)
 
 
@@ -191,7 +199,7 @@ def adminDashboard(request):
     context={'restaurants': restaurants}
     return render(request, 'store/admin-dashboard.html', context)
 
-
+@unauthenticated_user
 def signin(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -199,7 +207,12 @@ def signin(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('home')
+            if request.user.is_customer==True:
+                return redirect('home')
+            if request.user.is_admin==True:
+                return redirect('adminpage')
+            if request.user.is_restaurant==True:
+                return redirect('restOwner')
         else:
             registeredUser = RegisteredUser.objects.filter(email=form.data['username']).first()
 
@@ -240,6 +253,8 @@ def signup(request):
             customer.address=form.cleaned_data.get('address')
             customer.phone=form.cleaned_data.get('phone')
             customer.save()
+            group = form.cleaned_data['group']        
+            group.user_set.add(customer)
             return redirect('/')
     else:
         form = CustomerCreationForm()
@@ -314,4 +329,43 @@ def deleteRestaurant(request, pk):
 
     context={'item': restaurant, 'restaurant': restaurant}
     return render(request, 'store/delete-restaurant.html', context)
+
+def accountSettings(request):
+    customer = request.user.customer
+    form = CustomerCreationForm(instance=customer)
+
+    if request.method == 'POST':
+        form = CustomerCreationForm(request.POST, request.FILES, instance=customer)
+        if form.is_valid():
+            form.save()
+
+    context = {'form':form}
+    return render(request, 'store/account_settings.html', context)
+
+
+def deleteProfile(request, pk):
+    user = User.objects.get(id=pk)
+    if request.method == "POST":
+        user.delete()
+        return redirect('home', id=pk)
+
+    context = {'user': user}
+    return render(request, 'store/delete_profile.html', context)
+
+
+class StoreView(ListView): ##NEWWW
+    model = Post 
+    template_name = 'store/store.html' #sadece önüne store ekledim???
+
+
+class CommentDetailView(DetailView):
+    model = Post
+    template_name = 'store/details.html'
+
+
+class AddPostView(CreateView):
+    model = Post
+    template_name = 'store/add_post.html'
+    fields = '__all__'
+
 

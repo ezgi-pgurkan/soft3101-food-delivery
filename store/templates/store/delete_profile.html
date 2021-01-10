@@ -1,0 +1,31 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Inner page header container -->
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Inner Page</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>Inner Page</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <!-- Inner page container -->
+    <section class="inner-page">
+        <div class="container">
+            <p>
+                <p>Are you sure you want to delete your profile?</p>
+                <form action="" method="POST">
+                {% csrf_token %}
+                <a href="{% url 'home' user.id %}" class="btn btn-sm btn-outline-secondary">Cancel</a>
+                <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger delete-btn">
+            </form>
+            </p>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}

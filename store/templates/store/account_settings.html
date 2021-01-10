@@ -1,0 +1,61 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Inner page header container -->
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Inner Page</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>Inner Page</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <!-- Inner page container -->
+    <section class="inner-page">
+        <div class="container">
+            <p>             
+<style>
+	.profile-pic{
+		max-width: 200px;		
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Homepage</a>
+			<hr>
+			<h3 style="color:red; text-align: center">Edit Profile</h3>
+			<hr>
+			<img class="profile-pic" src="{{request.user.customer.profile_image.url}}">	
+		</div>
+	</div>
+	<div class="form-group"> 
+		<div class="col-sm-2 col-form-label"> 
+			
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{form.as_p}}
+				<td><a class="btn btn-sm btn-danger" href="{% url 'delete_profile' user.id %}">Delete Profile</a></td>  
+			
+				<button type="submit" class="btn btn-primary">Save</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+            </p>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}
