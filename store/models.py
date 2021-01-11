@@ -38,7 +38,6 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
 class RegisteredUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
@@ -167,7 +166,7 @@ class Product(models.Model):
     restaurant = models.ForeignKey(Restaurant, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     @property
     def imageURL(self):
@@ -183,7 +182,6 @@ class Order(models.Model):
     complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100, null=True)
     restaurant = models.ForeignKey(Restaurant, related_name='orders', on_delete=models.SET_NULL, null=True, blank=True)
-
 
     def __str__(self):
         return str(self.id)
@@ -207,8 +205,6 @@ class Order(models.Model):
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
         return total 
-
-
 
     @property
     def get_cart_item_names(self):

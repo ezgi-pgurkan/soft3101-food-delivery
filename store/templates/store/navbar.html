@@ -1,53 +1,36 @@
 {% load static %}
-
 <!-- Template Main CSS File -->
 <link href="{% static 'assets/css/style.css'%}" rel="stylesheet">
-
 <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top">
+<header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
-
-      <h1 class="logo mr-auto"><a href="{% url 'home' %}">HungerZone</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-
-      <nav class="nav-menu d-none d-lg-block">
-        <ul>
-          <li class="active"><a href="{% url 'home' %}">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#menu">Menu</a></li>
-          <li><a href="#specials">Specials</a></li>
-          <li><a href="{% url 'signup' %}">Sign Up</a></li>
-          <li><a href="{% url 'signin' %}">Sign In</a></li>
-          <li><a href="{% url 'signout' %}">Sign Out</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li class="book-a-table text-center"><a href="{% url 'registration' %}">Become A Partner</a></li>
-        </ul>
-      </nav><!-- .nav-menu -->
-
+        <h1 class="logo mr-auto"><a href="{% url 'home' %}">HungerZone</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+        <nav class="nav-menu d-none d-lg-block">
+            <ul>
+                <li class="active"><a href="{% url 'home' %}">Home</a></li>
+                {% if request.user.customer %}
+                <li><a href="{% url 'store' %}">Menu</a></li>
+                {% endif %}
+                {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                <li><a href="{% url 'signin' %}">Sign In</a></li>
+                {% endif %}
+                {% if request.user.restaurant %}
+                <li><a href="{% url 'restOwner' %}">Your Restaurant</a></li>
+                {% endif %}
+                {% if request.user.admin %}
+                <li><a href="{% url 'adminpage' %}">Admin Board</a></li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'signout' %}">Sign Out</a></li>
+                {% endif %}
+                {% if not request.user.is_authenticated %}
+                <li class="book-a-table text-center"><a href="{% url 'registration' %}">Become A Partner</a></li>
+                {% endif %}
+            </ul>
+        </nav><!-- .nav-menu -->
     </div>
-  </header><!-- End Header -->
-
-
-<!-- End Header 
-  '''
-def idk(request):
-    if request.method=="POST":
-        return render(request, 'store/idk.html', {})
-
-    else:
-        return render(request, 'store/registerRestaurant.html', {})
-
-        
-        message_name=request.POST['message_name']
-        message_email=request.POST['message_email']
-        message=request.POST['message']    
-
-        send_mail(
-            message_name,
-            message,
-            message_email,
-            ['ezgi.pgurkanx@gmail.com']
-            )
-'''
--->
+</header><!-- End Header -->
+<!-- End Header

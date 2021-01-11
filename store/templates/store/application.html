@@ -1,3 +1,13 @@
 <h1> {{ restaurantOwnerName }}, your application has been sent successfully! </h1>
 <hr>
 <h5>We will call back or send an email to confirm your registration. Thank you!</h5>
+
+
+
+<script>
+    function redirect(){
+       window.location.href = "{% url 'home' %}";
+    }
+
+    setTimeout(redirect, 3000);
+</script>
