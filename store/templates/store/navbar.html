@@ -11,7 +11,7 @@
             <ul>
                 <li class="active"><a href="{% url 'home' %}">Home</a></li>
                 {% if request.user.customer %}
-                <li><a href="{% url 'store' %}">Menu</a></li>
+                <li><a href="#">Restaurants</a></li>
                 {% endif %}
                 {% if not request.user.is_authenticated %}
                 <li><a href="{% url 'signup' %}">Sign Up</a></li>

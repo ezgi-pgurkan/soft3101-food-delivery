@@ -59,12 +59,12 @@
                 {% for restaurant in restaurants %}
                 <div class="col-lg-4">
                     <div class="box" data-aos="zoom-in" data-aos-delay="100">
-                        <a href="store/">
+                        <a href="{% url 'store' restaurant.restname %}">
                             <div class="row justify-content-center">
                                 <img src="{{restaurant.logo.url}}" height="100">
                             </div>
                             <div class="row justify-content-center">
-                                <h4>{{restaurant.name}}</h4>
+                                <h4>{{restaurant.restname}}</h4>
                             </div>
                         </a>
                     </div>

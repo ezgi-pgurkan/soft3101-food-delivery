@@ -1,5 +1,5 @@
 from urllib.parse import urlencode
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse 
 import json
 import datetime
@@ -184,6 +184,8 @@ def createRestaurant(request):
     context={'form2': form2}
     return render(request, 'store/restaurantformsecond.html', context)
 
+
+
 #admin deletes a restaurant
 @allowed_users(allowed_roles=['admin'])
 def deleteRestaurant(request, pk):
@@ -195,10 +197,11 @@ def deleteRestaurant(request, pk):
     context={'item': restaurant, 'restaurant': restaurant}
     return render(request, 'store/delete-restaurant.html', context)
 
+
 #customer's view of a restaurant page
 @canorder(allowed_roles=['customer'])
-def store(request):
-
+def store(request, restname):
+    restaurant = get_object_or_404(Restaurant, restname=restname)
     if request.user.is_authenticated:
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -206,18 +209,17 @@ def store(request):
         cartItems = order.get_cart_items 
     else:
         items = []
-        order = {'get_cart_total':0, 'get_cart_items':0, 'shipping': False}
-        
-    products = Product.objects.all()
-    starters=Product.objects.filter(category='Starter')
-    salads=Product.objects.filter(category='Salad')
-    specialties=Product.objects.filter(category='Specialty')
-    desserts=Product.objects.filter(category='Dessert')
-    drinks=Product.objects.filter(category='Drink')
+        order = {'get_cart_total':0, 'get_cart_items':0, 'shipping': False}    
+    products=Product.objects.filter(restaurant=restaurant)
+    starters=products.filter(category='Starter')
+    salads=products.filter(category='Salad')
+    specialties=products.filter(category='Specialty')
+    desserts=products.filter(category='Dessert')
+    drinks=products.filter(category='Drink')
     posts =Post.objects.all()
     details = Post.objects.all()
 
-    context={'products': products, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks,'posts':posts, 'details':details}
+    context={'restaurant':restaurant, 'order': order, 'products': products, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks,'posts':posts, 'details':details}
     return render(request, 'store/store.html', context)
 
 #customer's cart
@@ -227,12 +229,12 @@ def cart(request):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
-        cartItems = order.get_cart_items # we'll set that to the logged in user 
+        cartItems = order.get_cart_items 
     else:
         items = []
         order = {'get_cart_total':0, 'get_cart_items':0,'shipping': False}
 
-    context = {'items':items, 'order':order, 'cartItems': cartItems} #and we need to pass that in
+    context = {'items':items, 'order':order, 'cartItems': cartItems}
     return render(request, 'store/cart.html', context)
 
 #customer checkout
