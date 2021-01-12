@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.urls import reverse
+from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 
 from django.db import models
@@ -85,8 +86,8 @@ class Customer(models.Model):
     name = models.CharField(max_length=200, null=True)
     surname = models.CharField(max_length=200, null=True)
     address = models.CharField(max_length=500, null=True, blank=True)
-    phone = models.CharField(max_length=200)
-    profile_image = models.ImageField(default='static/assets/img/logo/default-logo.png', upload_to='static/assets/img/logo')
+    phone = PhoneNumberField(blank=True)
+    profile_image = models.ImageField(default='profilepic.png')
 
     def __str__(self):
         return self.userEmail.email
@@ -119,7 +120,7 @@ class Restaurant(models.Model):
     tag = models.CharField(max_length=200, null=True, choices=TAGS) 
     city=models.CharField(max_length=200, null=True, choices=CITIES)
     restname = models.CharField(max_length=200, null=True)
-    phone = models.CharField(max_length=200)
+    phone = PhoneNumberField(blank=True)
     address = models.CharField(max_length=300, null=True, blank=True) 
     rate = models.DecimalField(null=True, blank=True, max_digits=2, decimal_places=1, default=Decimal(0.0))
     rateCount = models.IntegerField(null=True, blank=True, default=0)
@@ -236,14 +237,14 @@ class ShippingAddress(models.Model):
         return self.address
 
 
-class Post(models.Model): ###NEWWW
+class Post(models.Model):
     title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255)
+    author = models.ForeignKey(RegisteredUser, on_delete=models.CASCADE)
     body = models.TextField()
 
     def str(self):
         return self.title + ' | ' + str(self.author)
 
     def get_absolute_url(self):
-        return reverse('d-detail', args=(str(self.pk)))
-
+        return reverse('d-detail',  args=[str(self.id)])
+       

@@ -144,8 +144,8 @@ def createRestaurantUser(request):
     if request.method=='POST':
         form1=RestaurantForm1(request.POST, request.FILES)
         if form1.is_valid():    
-           form1.save()
-           return redirect('create_restaurant')
+            form1.save()
+            return redirect('create_restaurant')
        
     context={'form1': form1}
     return render(request, 'store/restaurantformfirst.html', context)
@@ -158,28 +158,25 @@ def createRestaurant(request):
         form2=RestaurantForm2(request.POST, request.FILES)
         if form2.is_valid():    
             form2.save()
-            restaurant = Restaurant(userEmail=user)
-            restaurant.tag=form.cleaned_data.get('tag')
-            restaurant.city=form.cleaned_data.get('city')
-            restaurant.restname=form.cleaned_data.get('restname')
-            restaurant.hone=form.cleaned_data.get('phone')
-            restaurant.phone=form.cleaned_data.get('phone')
-            restaurant.address=form.cleaned_data.get('address')
-            restaurant.rate=form.cleaned_data.get('rate')
-            restaurant.rateCount=form.cleaned_data.get('rateCount')
-            restaurant.image1=form.cleaned_data.get('image1')
-            restaurant.image2=form.cleaned_data.get('image2')
-            restaurant.image3=form.cleaned_data.get('image3')
-            restaurant.image4=form.cleaned_data.get('image4')
-            restaurant.image5=form.cleaned_data.get('image5')
-            restaurant.logo=form.cleaned_data.get('logo')
-            restaurant.workingHoursFrom=form.cleaned_data.get('workingHoursFrom')
-            restaurant.workingHoursTo=form.cleaned_data.get('workingHoursTo')
-            restaurant.workingDaysFrom=form.cleaned_data.get('workingDaysFrom')
-            restaurant.workingDaysTo=form.cleaned_data.get('workingDaysTo')
+            restaurant = Restaurant(userEmail=form2.cleaned_data.get('userEmail'))
+            restaurant.tag=form2.cleaned_data.get('tag')
+            restaurant.city=form2.cleaned_data.get('city')
+            restaurant.restname=form2.cleaned_data.get('restname')
+            restaurant.phone=form2.cleaned_data.get('phone')
+            restaurant.address=form2.cleaned_data.get('address')
+            restaurant.rate=form2.cleaned_data.get('rate')
+            restaurant.rateCount=form2.cleaned_data.get('rateCount')
+            restaurant.image1=form2.cleaned_data.get('image1')
+            restaurant.image2=form2.cleaned_data.get('image2')
+            restaurant.image3=form2.cleaned_data.get('image3')
+            restaurant.image4=form2.cleaned_data.get('image4')
+            restaurant.image5=form2.cleaned_data.get('image5')
+            restaurant.logo=form2.cleaned_data.get('logo')
+            restaurant.workingHoursFrom=form2.cleaned_data.get('workingHoursFrom')
+            restaurant.workingHoursTo=form2.cleaned_data.get('workingHoursTo')
+            restaurant.workingDaysFrom=form2.cleaned_data.get('workingDaysFrom')
+            restaurant.workingDaysTo=form2.cleaned_data.get('workingDaysTo')
             restaurant.save()
-            group = Group.objects.get(name='restaurant')
-            user.groups.add(group)
             return redirect('adminpage')
     context={'form2': form2}
     return render(request, 'store/restaurantformsecond.html', context)
@@ -310,28 +307,27 @@ def processOrder(request):
     return JsonResponse('Payment submitted..', safe=False)
 
 #customer account settings
-@login_required(login_url='signin')
 @allowed_users(allowed_roles=['customer'])
 def accountSettings(request):
     customer = request.user.customer
-    form = CustomerCreationForm(instance=customer)
+    form = CustomerForm(instance=customer)
 
     if request.method == 'POST':
-        form = CustomerCreationForm(request.POST, request.FILES, instance=customer)
+        form = CustomerForm(request.POST, request.FILES, instance=customer)
         if form.is_valid():
             form.save()
 
     context = {'form':form}
     return render(request, 'store/account_settings.html', context)
 
-#customer deletes their profile
 
+#customer deletes their profile
 @allowed_users(allowed_roles=['customer'])
 def deleteProfile(request, pk):
-    user = User.objects.get(id=pk)
+    user = RegisteredUser.objects.get(id=pk)
     if request.method == "POST":
         user.delete()
-        return redirect('home', id=pk)
+        return redirect('/', id=pk)
 
     context = {'user': user}
     return render(request, 'store/delete_profile.html', context)
@@ -396,7 +392,7 @@ def deleteProduct(request, pk):
 #review
 class StoreView(ListView):
     model = Post 
-    template_name = 'store/store.html' #sadece önüne store ekledim???
+    template_name = 'store/store.html'
 
 #review
 class CommentDetailView(DetailView):

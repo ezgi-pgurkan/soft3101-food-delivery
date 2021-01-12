@@ -19,13 +19,19 @@
         <div class="container">
             <p>
                 <p>Are you sure you want to delete your profile?</p>
-                <form action="" method="POST">
-                {% csrf_token %}
-                <a href="{% url 'home' user.id %}" class="btn btn-sm btn-outline-secondary">Cancel</a>
-                <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger delete-btn">
-            </form>
+                <form action="{% url 'delete_profile' user.id %}" method="POST">
+                    {% csrf_token %}
+                    <a href="{% url 'home' %}">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                </form>
             </p>
         </div>
     </section>
 </main><!-- End #main -->
 {% endblock %}
+<!--
+<form action="" method="POST">
+                {% csrf_token %}
+                <a href="{% url 'home' %}" class="btn btn-sm btn-outline-secondary">Cancel</a>
+                <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger delete-btn">
+            </form>-->
