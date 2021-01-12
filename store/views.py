@@ -194,7 +194,6 @@ def deleteRestaurant(request, pk):
     context={'item': restaurant, 'restaurant': restaurant}
     return render(request, 'store/delete-restaurant.html', context)
 
-
 #customer's view of a restaurant page
 @canorder(allowed_roles=['customer'])
 def store(request, restname):
@@ -203,7 +202,7 @@ def store(request, restname):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
-        cartItems = order.get_cart_items 
+        cartItems = order.get_cart_items
     else:
         items = []
         order = {'get_cart_total':0, 'get_cart_items':0, 'shipping': False}    
@@ -215,39 +214,8 @@ def store(request, restname):
     drinks=products.filter(category='Drink')
     posts =Post.objects.all()
     details = Post.objects.all()
-
-    context={'restaurant':restaurant, 'order': order, 'products': products, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks,'posts':posts, 'details':details}
+    context={'restaurant': restaurant, 'order': order, 'products': products, 'items': items, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks,'posts':posts, 'details':details}
     return render(request, 'store/store.html', context)
-
-#customer's cart
-@canorder(allowed_roles=['customer'])
-def cart(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items 
-    else:
-        items = []
-        order = {'get_cart_total':0, 'get_cart_items':0,'shipping': False}
-
-    context = {'items':items, 'order':order, 'cartItems': cartItems}
-    return render(request, 'store/cart.html', context)
-
-#customer checkout
-@canorder(allowed_roles=['customer'])
-def checkout(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items # we'll set that to the logged in user 
-    else:
-        items = []
-        order = {'get_cart_total':0, 'get_cart_items':0, 'shipping': False}
-
-    context = {'items':items, 'order':order, 'cartItems': cartItems}
-    return render(request, 'store/checkout.html', context)
 
 #update order items in cart
 @canorder(allowed_roles=['customer'])
@@ -278,7 +246,8 @@ def updateItem(request):
 
 #payment
 @canorder(allowed_roles=['customer'])
-def processOrder(request):
+def processOrder(request, restname):
+    restaurant = get_object_or_404(Restaurant, restname=restname)
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
 
@@ -290,6 +259,7 @@ def processOrder(request):
 
         if total == order.get_cart_total:
             order.complete = True
+            order.restaurant=Restaurant.objects.get(restname=restname)
         order.save()
 
         if order.shipping == True:

@@ -17,9 +17,7 @@
     <!-- Inner page container -->
     <section class="inner-page">
         <div class="container">
-            <a href="{% url 'cart' %}">
-                <img src="{% static 'images/cart2.png' %}" height="50" weight="50">
-            </a>
+            <img src="{% static 'images/cart2.png' %}" height="50" weight="50">
             <p id="cart-total">{{cartItems}}</p>
             <!-- ======= Specials Section ======= -->
             <section id="specials" class="specials">
@@ -39,6 +37,12 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#tab-3">Photos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tab-4">Cart</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tab-5">Checkout</a>
                                 </li>
                             </ul>
                         </div>
@@ -175,13 +179,207 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="tab-pane" id="tab-4">
+                                    <div class="row">
+                                        <div class="col-lg-7 details order-2 order-lg-1">
+                                            <h3 style="text-align: center">Your Order</h3>
+                                            <hr>
+                                            {% for item in items %}
+                                            <div class="cart-row">
+                                                <section id="menu" class="menu section-bg">
+                                                    <div class="container">
+                                                        <img src="{{item.product.image.url}}" class="menu-img" alt="">
+                                                        <div class="menu-content">
+                                                            <a href="#">{{item.product.name}}</a><span>${{item.product.price|floatformat:2}}</span>
+                                                        </div>
+                                                        <div class="menu-ingredients">
+                                                            <h4>&#215; {{item.quantity}}</h4>
+                                                            <div class="quantity">
+                                                                <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}" height="20" weight="20">
+                                                                <p> </p>
+                                                                <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}" height="20" weight="20">
+                                                            </div>
+                                                        </div>
+                                                        <div class="menu-ingredients">
+                                                            <div class="btns">
+                                                                <button data-product="{{item.product.id}}" data-action="remove" class="btn btn-sm btn-outline-success delete-btn update-cart" style="float: right;">Remove from Cart</button>
+                                                            </div>
+                                                        </div>
+                                                </section>
+                                            </div>
+                                            {% endfor %}
+                                            <hr>
+                                            <h5 style="text-align: left; width:37%; display: inline-block;">Items: {{order.get_cart_items}}</h5>
+                                            <h5 style="text-align: right; width:60%;  display: inline-block;">Total: ${{order.get_cart_total|floatformat:2}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="tab-pane" id="tab-5">
+                                <div class="row">
+                                    <div class="col-lg-12 details order-2 order-lg-1">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="box-element">
+                                                    <div class="d-flex justify-content-center">
+                                                        <h3>Order Summary</h3>
+                                                    </div>
+                                                    <hr>
+                                                    {% for item in items %}
+                                                    <div class="cart-row">
+                                                        <section id="menu" class="menu section-bg">
+                                                            <img src="{{item.product.image.url}}" class="menu-img" alt="">
+                                                            <div class="menu-content">
+                                                                <a href="#">{{item.product.name}}</a><span>${{item.product.price|floatformat:2}}</span>
+                                                            </div>
+                                                            <div class="menu-ingredients">
+                                                                x{{item.quantity}}
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                    {% endfor %}
+                                                    <h5 style="float: right">Items: {{order.get_cart_items}}</h5>
+                                                    <br>
+                                                    <br>
+                                                    <h5 style="float: right">Total: ${{order.get_cart_total|floatformat:2}}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="box-element" id="form-wrapper">
+                                                    <form id="form">
+                                                        <div id="user-info">
+                                                            <br>
+                                                            <br>
+                                                            <br>
+                                                            <div class="form-field">
+                                                                <input required class="form-control" type="text" name="name" placeholder="Name..">
+                                                            </div>
+                                                            <div class="form-field">
+                                                                <input required class="form-control" type="email" name="email" placeholder="Email..">
+                                                            </div>
+                                                        </div>
+                                                        <div id="shipping-info">
+                                                            <hr>
+                                                            <p>Shipping Information:</p>
+                                                            <hr>
+                                                            <div class="form-field">
+                                                                <input class="form-control" type="text" name="address" placeholder="Address..">
+                                                            </div>
+                                                            <div class="form-field">
+                                                                <input class="form-control" type="text" name="city" placeholder="City..">
+                                                            </div>
+                                                            <div class="form-field">
+                                                                <input class="form-control" type="text" name="state" placeholder="State..">
+                                                            </div>
+                                                            <div class="form-field">
+                                                                <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                                                            </div>
+                                                            <div class="form-field">
+                                                                <input class="form-control" type="text" name="country" placeholder="Zip code..">
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <input id="form-button" class="btn btn-success btn-block " type="submit" value="Continue">
+                                                    </form>
+                                                </div>
+                                                <br>
+                                                <div class="box-element d-none" id="payment-info">
+                                                    <small>Payment Options</small>
+                                                    <button id="make-payment">Make Payment</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
         </div>
+        </div>
     </section><!-- End Specials Section -->
     </div>
     </section>
 </main><!-- End #main -->
+<script type="text/javascript">
+var shipping = '{{order.shipping}}'
+var total = '{{order.get_cart_total}}'
+
+if (shipping == 'False') {
+    document.getElementById('shipping-info').innerHTML = ''
+}
+
+if (user != 'AnonymousUser') {
+    document.getElementById('user-info').innerHTML = ''
+}
+
+if (shipping == 'False' && user != 'AnonymousUser') {
+    //Hide entire form if user is logged in and shipping is false
+    $("#form-button").addClass('d-none');
+    //Show payment if logged in user wants to buy an item that does not require shipping
+    $("#payment-info").removeClass('d-none');
+}
+
+
+var form = document.getElementById('form')
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault()
+    console.log('Form Submitted...')
+
+
+    $("#payment-info").removeClass('d-none');
+    $("#form-button").addClass('d-none');
+
+})
+
+document.getElementById('make-payment').addEventListener('click', function(e) {
+    submitFormData()
+})
+
+function submitFormData() {
+    console.log('Payment button clicked')
+
+    var userFormData = {
+        'name': null,
+        'email': null,
+        'total': total,
+    }
+
+    var shippingInfo = {
+        'address': null,
+        'city': null,
+        'state': null,
+        'zipcode': null,
+    }
+
+    if (shipping != 'False') {
+        shippingInfo.address = form.address.value
+        shippingInfo.city = form.city.value
+        shippingInfo.state = form.state.value
+        shippingInfo.zipcode = form.zipcode.value
+
+    }
+
+    if (user == 'AnonymousUser') {
+        userFormData.name = form.name.value
+        userFormData.email = form.email.value
+    }
+
+    var url = "{% url 'process_order' restaurant.restname %}"
+    fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({ 'form': userFormData, 'shipping': shippingInfo })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Success:', data);
+            alert('Transaction completed');
+            window.location.href = "{% url 'home' %}"
+        })
+}
+</script>
 {% endblock %}
