@@ -129,7 +129,7 @@ class Restaurant(models.Model):
     image3 = models.ImageField(default='defaultClient.jpg', upload_to='client_pics')
     image4 = models.ImageField(default='defaultClient.jpg', upload_to='client_pics')
     image5 = models.ImageField(default='defaultClient.jpg', upload_to='client_pics')
-    logo = models.ImageField(default='static/assets/img/logo/default-logo.png', upload_to='static/assets/img/logo')
+    logo = models.ImageField(default='logo.png')
     workingHoursFrom = models.CharField(max_length=200, null=True, blank=True)
     workingHoursTo = models.CharField(max_length=200, null=True, blank=True)
     workingDaysFrom = models.CharField(max_length=200, null=True, blank=True)
