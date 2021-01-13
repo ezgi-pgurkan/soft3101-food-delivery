@@ -6,10 +6,10 @@
     <section class="breadcrumbs">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <h2>Store </h2>
+                <h2>{{restaurant.restname}}</h2>
                 <ol>
                     <li><a href="{% url 'home' %}">Home</a></li>
-                    <li>Store</li>
+                    <li>{{restaurant.restname}}</li>
                 </ol>
             </div>
         </div>
@@ -17,7 +17,7 @@
     <!-- Inner page container -->
     <section class="inner-page">
         <div class="container">
-            <img src="{% static 'images/cart2.png' %}" height="50" weight="50">
+            <img src="{% static 'images/cart.jpg' %}" height="50" weight="50">
             <p id="cart-total">{{cartItems}}</p>
             <!-- ======= Specials Section ======= -->
             <section id="specials" class="specials">

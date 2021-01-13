@@ -145,6 +145,9 @@ def createRestaurantUser(request):
         form1=RestaurantForm1(request.POST, request.FILES)
         if form1.is_valid():    
             form1.save()
+            user = RegisteredUser.objects.filter(email=form1.cleaned_data['email']).first()
+            group = Group.objects.get(name='restaurant')
+            user.groups.add(group)
             return redirect('create_restaurant')
        
     context={'form1': form1}

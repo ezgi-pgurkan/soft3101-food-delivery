@@ -29,10 +29,14 @@ class ProductForm(ModelForm):
         model= Product
         fields = ('name', 'price', 'description', 'category', 'image')
 
-class RestaurantForm1(ModelForm):
+
+class RestaurantForm1(UserCreationForm):
+    is_restaurant=forms.BooleanField()
     class Meta:
-        model= RegisteredUser
-        fields = '__all__'
+        model  = RegisteredUser
+        fields = ('email', 'username', 'password1', 'password2', 'is_restaurant')
+        field_order=('email', 'username', 'password1', 'password2', 'is_restaurant')
+
 
 class RestaurantForm2(ModelForm):
     class Meta:
