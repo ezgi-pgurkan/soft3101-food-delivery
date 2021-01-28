@@ -71,6 +71,7 @@
                                             <hr>
                                             <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
                                                 {% for starter in starters %}
+                                                {% if starter.isVisible == True %}
                                                 <div class="col-lg-6 menu-item filter-starters">
                                                     <img src="{{starter.image.url}}" class="menu-img" alt="">
                                                     <div class="menu-content">
@@ -83,8 +84,10 @@
                                                         <button data-product="{{starter.id}}" data-action="add" class="btn btn-sm btn-outline-success add-btn update-cart" style="float: right;">Add to Cart</button>
                                                     </div>
                                                 </div>
+                                                {% endif %}
                                                 {% endfor %}
                                                 {% for salad in salads %}
+                                                {% if salad.isVisible == True %}
                                                 <div class="col-lg-6 menu-item filter-salad">
                                                     <img src="{{salad.image.url}}" class="menu-img" alt="">
                                                     <div class="menu-content">
@@ -97,8 +100,10 @@
                                                         <button data-product="{{salad.id}}" data-action="add" class="btn btn-sm btn-outline-success add-btn update-cart" style="float: right;">Add to Cart</button>
                                                     </div>
                                                 </div>
+                                                {% endif %}
                                                 {% endfor %}
                                                 {% for specialty in specialties %}
+                                                {% if specialty.isVisible == True %}
                                                 <div class="col-lg-6 menu-item filter-specialty">
                                                     <img src="{{specialty.image.url}}" class="menu-img" alt="">
                                                     <div class="menu-content">
@@ -111,8 +116,10 @@
                                                         <button data-product="{{specialty.id}}" data-action="add" class="btn btn-sm btn-outline-success add-btn update-cart" style="float: right;">Add to Cart</button>
                                                     </div>
                                                 </div>
+                                                {% endif %}
                                                 {% endfor %}
                                                 {% for dessert in desserts %}
+                                                {% if dessert.isVisible == True %}
                                                 <div class="col-lg-6 menu-item filter-desserts">
                                                     <img src="{{dessert.image.url}}" class="menu-img" alt="">
                                                     <div class="menu-content">
@@ -125,8 +132,10 @@
                                                         <button data-product="{{dessert.id}}" data-action="add" class="btn btn-sm btn-outline-success add-btn update-cart" style="float: right;">Add to Cart</button>
                                                     </div>
                                                 </div>
+                                                {% endif %}
                                                 {% endfor %}
                                                 {% for drink in drinks %}
+                                                {% if drink.isVisible == True %}
                                                 <div class="col-lg-6 menu-item filter-drinks">
                                                     <img src="{{drink.image.url}}" class="menu-img" alt="">
                                                     <div class="menu-content">
@@ -139,6 +148,7 @@
                                                         <button data-product="{{drink.id}}" data-action="add" class="btn btn-sm btn-outline-success add-btn update-cart" style="float: right;">Add to Cart</button>
                                                     </div>
                                                 </div>
+                                                {% endif %}
                                                 {% endfor %}
                                             </div>
                                         </div>
@@ -186,9 +196,9 @@
                                                         <div class="menu-ingredients">
                                                             <h4>&#215; {{item.quantity}}</h4>
                                                             <div class="quantity">
-                                                                <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}" height="20" weight="20">
+                                                                <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up1.png' %}" height="20" weight="20">
                                                                 <p> </p>
-                                                                <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}" height="20" weight="20">
+                                                                <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down2.png' %}" height="20" weight="20">
                                                             </div>
                                                         </div>
                                                         <div class="menu-ingredients">
@@ -313,6 +323,7 @@ if (shipping == 'False' && user != 'AnonymousUser') {
 
 var form = document.getElementById('form')
 
+//hide button
 form.addEventListener('submit', function(e) {
     e.preventDefault()
     console.log('Form Submitted...')

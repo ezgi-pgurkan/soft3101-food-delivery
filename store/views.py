@@ -339,16 +339,23 @@ def createProduct(request):
 #restaurant owner updates a product from his restaurant
 @allowed_users(allowed_roles=['restaurant'])
 def updateProduct(request, pk):
+    restaurant_instance = request.user.restaurant
     product=Product.objects.get(id=pk)
     form=ProductForm(instance=product)
+   
 
     if request.method=='POST':
-        form=ProductForm(request.POST, request.FILES, instance=product)
-        if form.is_valid():     
-            form.save()
+        form=ProductForm(request.POST, request.FILES)
+       
+        if form.is_valid(): 
+            product.isVisible=False
+            product.save()
+            p = form.save()
+            p.restaurant = restaurant_instance
+            p.save()
             return redirect('restOwner')
 
-    context={'form': form}
+    context={'restaurant_instance': restaurant_instance, 'form': form}
     return render(request, 'store/productform.html', context)
 
 #restaurant owner deletes a product from his restaurant
@@ -356,11 +363,11 @@ def updateProduct(request, pk):
 def deleteProduct(request, pk):
     product=Product.objects.get(id=pk)
     if request.method=='POST':
-        product.delete()
+        product.isVisible=False
+        product.save()
         return redirect('restOwner')
 
-    context={'item': product}
-    return render(request, 'store/delete.html', context)
+    return render(request, 'store/delete.html')
 
 #review
 class StoreView(ListView):

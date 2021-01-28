@@ -34,6 +34,7 @@ urlpatterns = [
     path('add_post/', AddPostView.as_view(), name="add_post"),
     path('not_authorized/', views.notAuthorized, name="not_authorized"),
     path('cannotorder/', views.cannotOrder, name="cannotorder"),
+
   
 ]
 
