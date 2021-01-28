@@ -45,6 +45,11 @@ class RestaurantForm2(ModelForm):
 
 
 class CustomerForm(ModelForm):
+    #city is not editable
+    city = forms.CharField(widget = forms.TextInput(attrs={'readonly':'readonly'}))
     class Meta:
         model = Customer
         fields = ('name', 'surname', 'city', 'address', 'phone', 'profile_image')
+
+
+ 
