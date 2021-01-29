@@ -178,30 +178,96 @@
                                     </section><!-- End Menu Section -->
                                 </div>
                                 <div class="tab-pane" id="tab-2">
-                                    <div class="row">
-                                        <div class="col-lg-8 details order-2 order-lg-1">
-                                            <h3>Et blanditiis nemo veritatis excepturi</h3>
-                                            <p class="font-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer a videna mareta paulona marka</p>
-                                            <p>Ea ipsum voluptatem consequatur quis est. Illum error ullam omnis quia et reiciendis sunt sunt est. Non aliquid repellendus itaque accusamus eius et velit ipsa voluptates. Optio nesciunt eaque beatae accusamus lerode pakto madirna desera vafle de nideran pal</p>
-                                        </div>
-                                        <div class="col-lg-4 text-center order-1 order-lg-2">
-                                            <img src="{% static 'assets/img/specials-2.png' %}" alt="" class="img-fluid">
-                                        </div>
+                                    <div class="section-title">
+                                        <h2>Reviews</h2>
+                                        <p>Your Reviews</p>
+                                        <br>
+                                        <ul>
+                                            {% for review in reviews reversed %}
+                                            <hr class='white'>
+                                            <h4 style="color: #f0cd6c"><b>{{review.title}}</b></h4>
+                                            <h6><b>{{review.author.name}} - </b>{{review.body}}</h6>
+                                            <hr class='white'>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-3">
-                                    <div class="row">
-                                        <div class="col-lg-8 details order-2 order-lg-1">
-                                            <h3>Impedit facilis occaecati odio neque aperiam sit</h3>
-                                            <p class="font-italic">Eos voluptatibus quo. Odio similique illum id quidem non enim fuga. Qui natus non sunt dicta dolor et. In asperiores velit quaerat perferendis aut</p>
-                                            <p>Iure officiis odit rerum. Harum sequi eum illum corrupti culpa veritatis quisquam. Neque necessitatibus illo rerum eum ut. Commodi ipsam minima molestiae sed laboriosam a iste odio. Earum odit nesciunt fugiat sit ullam. Soluta et harum voluptatem optio quae</p>
-                                        </div>
-                                        <div class="col-lg-4 text-center order-1 order-lg-2">
-                                            <img src="{% static 'assets/img/specials-3.png' %}" alt="" class="img-fluid">
+
+                                    <div class="section-title">
+                                        <h2>Gallery</h2>
+                                        <p>Your Photos</p>
+                                        <br>
+                                    
+                                    <!-- ======= Gallery Section ======= -->
+                                    <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+                                        <div class="row no-gutters">
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="gallery-item">
+                                                    <a href="{{restaurant.image1.url}}" class="venobox" data-gall="gallery-item">
+                                                        <img src="{{restaurant.image1.url}}" alt="" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="gallery-item">
+                                                    <a href="{{restaurant.image2.url}}" class="venobox" data-gall="gallery-item">
+                                                        <img src="{{restaurant.image2.url}}" alt="" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="gallery-item">
+                                                    <a href="{{restaurant.image3.url}}" class="venobox" data-gall="gallery-item">
+                                                        <img src="{{restaurant.image3.url}}" alt="" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="gallery-item">
+                                                    <a href="{{restaurant.image4.url}}" class="venobox" data-gall="gallery-item">
+                                                        <img src="{{restaurant.image4.url}}" alt="" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="gallery-item">
+                                                    <a href="{{restaurant.image5.url}}" class="venobox" data-gall="gallery-item">
+                                                        <img src="{{restaurant.image5.url}}" alt="" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="gallery-item">
+                                                    <a href="{{restaurant.image6.url}}" class="venobox" data-gall="gallery-item">
+                                                        <img src="{{restaurant.image6.url}}" alt="" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="gallery-item">
+                                                    <a href="{{restaurant.image7.url}}" class="venobox" data-gall="gallery-item">
+                                                        <img src="{{restaurant.image7.url}}" alt="" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="gallery-item">
+                                                    <a href="{{restaurant.image8.url}}" class="venobox" data-gall="gallery-item">
+                                                        <img src="{{restaurant.image8.url}}" alt="" class="img-fluid">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    </div>
+                                    
                                 </div>
                                 <div class="tab-pane" id="tab-4">
+                                    <div class="section-title">
+                                        <h2>Orders</h2>
+                                        <p>Your Orders</p>
+                                   <br>
                                     <div class="row">
                                         <div class="col-lg-8 details order-2 order-lg-1">
                                             <table cellpadding="5" style="border: 1px solid white; text-align: center">
@@ -234,7 +300,7 @@
                                                         <h6 style="font-size: 17px">Total</h6>
                                                     </th>
                                                 </tr>
-                                                {% for order in orders %}
+                                                {% for order in orders reversed %}
                                                 <tr style="border: 1px solid white;">
                                                     <td>
                                                         <h6 style="font-size: 17px">{{order.customer.name}}</h6>
@@ -267,6 +333,7 @@
                                                     {% endfor %}
                                             </table>
                                         </div>
+                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-5">

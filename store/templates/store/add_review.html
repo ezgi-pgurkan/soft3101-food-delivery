@@ -18,15 +18,22 @@
     <section class="inner-page">
         <div class="container">
             <p>
-                <h1> Add a review </h1>
+                <h1> Add a Review </h1>
                 <br /><br />
                 <form method="POST">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button class="btn btn-secondary">Post</button>
+                   <button class="btn btn-outline-success">Post</button>
                 </form>
             </p>
         </div>
     </section>
 </main><!-- End #main -->
+
+<script>
+            var name = "{{user.id}}";
+            document.getElementById("elder").value
+             = name;
+
+        </script>
 {% endblock %}

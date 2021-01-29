@@ -2,10 +2,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from store import views
-from .views import StoreView,CommentDetailView, AddPostView
 from django.conf.urls.static import static
 from django.conf import settings 
-
 
 urlpatterns = [
     #Leave as empty string for base url
@@ -29,13 +27,9 @@ urlpatterns = [
     path('create_product/', views.createProduct, name='create_product'),
     path('update_product/<str:pk>', views.updateProduct, name='update_product'),
     path('delete/<str:pk>', views.deleteProduct, name='delete_product'),
-    path('store/', StoreView.as_view(), name="store"),
-    path('detail/<int:pk>', CommentDetailView.as_view(), name='d-detail'),
-    path('add_post/', AddPostView.as_view(), name="add_post"),
+    path('add_review/<restname>/', views.addReviewView, name="add_review"),
     path('not_authorized/', views.notAuthorized, name="not_authorized"),
     path('cannotorder/', views.cannotOrder, name="cannotorder"),
-
-  
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

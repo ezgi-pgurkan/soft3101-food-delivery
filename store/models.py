@@ -124,11 +124,14 @@ class Restaurant(models.Model):
     address = models.CharField(max_length=300, null=True, blank=True) 
     rate = models.DecimalField(null=True, blank=True, max_digits=2, decimal_places=1, default=Decimal(0.0))
     rateCount = models.IntegerField(null=True, blank=True, default=0)
-    image1 = models.ImageField(default='defaultClient.jpg', upload_to='client_pics')
-    image2 = models.ImageField(default='defaultClient.jpg', upload_to='client_pics')
-    image3 = models.ImageField(default='defaultClient.jpg', upload_to='client_pics')
-    image4 = models.ImageField(default='defaultClient.jpg', upload_to='client_pics')
-    image5 = models.ImageField(default='defaultClient.jpg', upload_to='client_pics')
+    image1 = models.ImageField(default='restaurant_defaultphoto.jpg')
+    image2 = models.ImageField(default='restaurant_defaultphoto.jpg')
+    image3 = models.ImageField(default='restaurant_defaultphoto.jpg')
+    image4 = models.ImageField(default='restaurant_defaultphoto.jpg')
+    image5 = models.ImageField(default='restaurant_defaultphoto.jpg')
+    image6 = models.ImageField(default='restaurant_defaultphoto.jpg')
+    image7 = models.ImageField(default='restaurant_defaultphoto.jpg')
+    image8 = models.ImageField(default='restaurant_defaultphoto.jpg')
     logo = models.ImageField(default='logo.png')
     workingHoursFrom = models.CharField(max_length=200, null=True, blank=True)
     workingHoursTo = models.CharField(max_length=200, null=True, blank=True)
@@ -238,14 +241,17 @@ class ShippingAddress(models.Model):
         return self.address
 
 
-class Post(models.Model):
+class Review(models.Model):
     title = models.CharField(max_length=255)
-    author = models.ForeignKey(RegisteredUser, on_delete=models.CASCADE)
     body = models.TextField()
+    author = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
+    restaurant = models.ForeignKey(Restaurant, related_name='reviews', on_delete=models.SET_NULL, null=True, blank=True)
 
+    
     def str(self):
-        return self.title + ' | ' + str(self.author)
+        return self.title + ' | ' + str(self.author.name)
 
-    def get_absolute_url(self):
-        return reverse('d-detail',  args=[str(self.id)])
+    def __str__(self):
+        return self.title 
+
        

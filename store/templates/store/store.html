@@ -17,8 +17,11 @@
     <!-- Inner page container -->
     <section class="inner-page">
         <div class="container">
-            <img src="{% static 'images/cart.jpg' %}" height="50" weight="50">
-            <p id="cart-total">{{cartItems}}</p>
+            <div style="float: right;">
+                <img src="{% static 'images/cart.png' %}" height="50" weight="50">
+                <br>
+                <h6 style="float: right" id="cart-total">Items: {{cartItems}}</h6>
+            </div>
             <!-- ======= Specials Section ======= -->
             <section id="specials" class="specials">
                 <div class="container" data-aos="fade-up">
@@ -155,137 +158,196 @@
                                     </section><!-- End Menu Section -->
                                 </div>
                                 <div class="tab-pane" id="tab-2">
-                                    <div class="row">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{% url 'add_post' %}"> Add comment</a>
-                                        </li>
+                                    <div class="section-title">
+                                        <h2>Reviews</h2>
+                                        <a href="{% url 'add_review' restaurant.restname %}"> <button class="btn btn-lg btn-outline-success add-btn" style="float: right">Add a Review</button></a>
+                                        <p>Reviews for {{restaurant.restname}}</p>
+                                        <br>
                                         <ul>
-                                            {% for post in posts %}
-                                            <li><a href="{% url 'd-detail' post.pk %}">{{post.title}} - </a> {{post.author}}
-                                                <br />
-                                                {{post.body}}</li>
+                                            {% for review in reviews reversed %}
+                                            <hr class='white'>
+                                            <h4 style="color: #f0cd6c"><b>{{review.title}}</b></h4>
+                                            <h6><b>{{review.author.name}} - </b>{{review.body}}</h6>
+                                            <hr class='white'>
                                             {% endfor %}
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-3">
-                                    <div class="row">
-                                        <div class="col-lg-8 details order-2 order-lg-1">
-                                            <h3>Impedit facilis occaecati odio neque aperiam sit</h3>
-                                            <p class="font-italic">Eos voluptatibus quo. Odio similique illum id quidem non enim fuga. Qui natus non sunt dicta dolor et. In asperiores velit quaerat perferendis aut</p>
-                                            <p>Iure officiis odit rerum. Harum sequi eum illum corrupti culpa veritatis quisquam. Neque necessitatibus illo rerum eum ut. Commodi ipsam minima molestiae sed laboriosam a iste odio. Earum odit nesciunt fugiat sit ullam. Soluta et harum voluptatem optio quae</p>
-                                        </div>
-                                        <div class="col-lg-4 text-center order-1 order-lg-2">
-                                            <img src="{% static 'assets/img/specials-3.png' %}" alt="" class="img-fluid">
+                                    <div class="section-title">
+                                        <h2>Gallery</h2>
+                                        <p>Photos from {{restaurant.restname}}</p>
+                                        <br>
+                                        <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+                                            <div class="row no-gutters">
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image1.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image1.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image2.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image2.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image3.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image3.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image4.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image4.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image5.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image5.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image6.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image6.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image7.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image7.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image8.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image8.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-4">
-                                    <div class="row">
-                                        <div class="col-lg-7 details order-2 order-lg-1">
-                                            <h3 style="text-align: center">Your Order</h3>
-                                            <hr>
-                                            {% for item in items %}
-                                            <div class="cart-row">
-                                                <section id="menu" class="menu section-bg">
-                                                    <div class="container">
-                                                        <img src="{{item.product.image.url}}" class="menu-img" alt="">
-                                                        <div class="menu-content">
-                                                            <a href="#">{{item.product.name}}</a><span>${{item.product.price|floatformat:2}}</span>
-                                                        </div>
-                                                        <div class="menu-ingredients">
-                                                            <h4>&#215; {{item.quantity}}</h4>
-                                                            <div class="quantity">
-                                                                <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up1.png' %}" height="20" weight="20">
-                                                                <p> </p>
-                                                                <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down2.png' %}" height="20" weight="20">
+                                    <div class="section-title">
+                                        <h2>Cart</h2>
+                                        <p>Your Order</p>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-lg-7 details order-2 order-lg-1">
+                                                {% for item in items %}
+                                                <div class="cart-row">
+                                                    <section id="menu" class="menu section-bg">
+                                                        <div class="container">
+                                                            <img src="{{item.product.image.url}}" class="menu-img" alt="">
+                                                            <div class="menu-content">
+                                                                <a href="#">{{item.product.name}}</a><span>${{item.product.price|floatformat:2}}</span>
                                                             </div>
-                                                        </div>
-                                                        <div class="menu-ingredients">
-                                                            <div class="btns">
-                                                                <button data-product="{{item.product.id}}" data-action="remove" class="btn btn-sm btn-outline-success delete-btn update-cart" style="float: right;">Remove from Cart</button>
+                                                            <div class="menu-ingredients">
+                                                                <h4>&#215; {{item.quantity}}</h4>
+                                                                <div class="quantity">
+                                                                    <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up1.png' %}" height="20" weight="20">
+                                                                    <h6>  </h6>
+                                                                    <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down2.png' %}" height="20" weight="20">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                </section>
+                                                            <div class="menu-ingredients">
+                                                                <div class="btns">
+                                                                    <button data-product="{{item.product.id}}" data-action="remove" class="btn btn-sm btn-outline-success delete-btn update-cart" style="float: right;">Remove from Cart</button>
+                                                                </div>
+                                                            </div>
+                                                    </section>
+                                                </div>
+                                                {% endfor %}
+                                                <hr>
+                                                <h5 style="text-align: left; width:37%; display: inline-block;">Items: {{order.get_cart_items}}</h5>
+                                                <h5 style="text-align: right; width:60%;  display: inline-block;">Total: ${{order.get_cart_total|floatformat:2}}</h5>
                                             </div>
-                                            {% endfor %}
-                                            <hr>
-                                            <h5 style="text-align: left; width:37%; display: inline-block;">Items: {{order.get_cart_items}}</h5>
-                                            <h5 style="text-align: right; width:60%;  display: inline-block;">Total: ${{order.get_cart_total|floatformat:2}}</h5>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-5">
-                                    <div class="row">
-                                        <div class="col-lg-12 details order-2 order-lg-1">
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="box-element">
-                                                        <div class="d-flex justify-content-center">
-                                                            <h3>Order Summary</h3>
-                                                        </div>
-                                                        <hr>
-                                                        {% for item in items %}
-                                                        <div class="cart-row">
-                                                            <section id="menu" class="menu section-bg">
-                                                                <img src="{{item.product.image.url}}" class="menu-img" alt="">
-                                                                <div class="menu-content">
-                                                                    <a href="#">{{item.product.name}}</a><span>${{item.product.price|floatformat:2}}</span>
-                                                                </div>
-                                                                <div class="menu-ingredients">
-                                                                    x{{item.quantity}}
-                                                                </div>
-                                                            </section>
-                                                        </div>
-                                                        {% endfor %}
-                                                        <h5 style="float: right">Items: {{order.get_cart_items}}</h5>
-                                                        <br>
-                                                        <br>
-                                                        <h5 style="float: right">Total: ${{order.get_cart_total|floatformat:2}}</h5>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="box-element" id="form-wrapper">
-                                                        <form id="form">
-                                                            <div id="user-info">
-                                                                <br>
-                                                                <br>
-                                                                <br>
-                                                                <div class="form-field">
-                                                                    <input required class="form-control" type="text" name="name" placeholder="Name..">
-                                                                </div>
-                                                                <div class="form-field">
-                                                                    <input required class="form-control" type="email" name="email" placeholder="Email..">
-                                                                </div>
+                                    <div class="section-title">
+                                        <h2>Checkout</h2>
+                                        <p>Order Summary</p>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-lg-12 details order-2 order-lg-1">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="box-element">
+                                                            {% for item in items %}
+                                                            <div class="cart-row">
+                                                                <section id="menu" class="menu section-bg">
+                                                                    <img src="{{item.product.image.url}}" class="menu-img" alt="">
+                                                                    <div class="menu-content">
+                                                                        <a href="#">{{item.product.name}}</a><span>${{item.product.price|floatformat:2}}</span>
+                                                                    </div>
+                                                                    <div class="menu-ingredients">
+                                                                        x{{item.quantity}}
+                                                                    </div>
+                                                                </section>
                                                             </div>
-                                                            <div id="shipping-info">
-                                                                <hr>
-                                                                <p>Shipping Information:</p>
-                                                                <hr>
-                                                                <div class="form-field">
-                                                                    <input class="form-control" type="text" name="address" placeholder="Address..">
-                                                                </div>
-                                                                <div class="form-field">
-                                                                    <input class="form-control" type="text" name="city" placeholder="City..">
-                                                                </div>
-                                                                <div class="form-field">
-                                                                    <input class="form-control" type="text" name="state" placeholder="State..">
-                                                                </div>
-                                                                <div class="form-field">
-                                                                    <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
-                                                                </div>
-                                                                <div class="form-field">
-                                                                    <input class="form-control" type="text" name="country" placeholder="Zip code..">
-                                                                </div>
-                                                            </div>
-                                                            <hr>
-                                                            <input id="form-button" class="btn btn-success btn-block " type="submit" value="Continue">
-                                                        </form>
+                                                            {% endfor %}
+                                                            <h5 style="float: right">Items: {{order.get_cart_items}}</h5>
+                                                            <br>
+                                                            <br>
+                                                            <h5 style="float: right">Total: ${{order.get_cart_total|floatformat:2}}</h5>
+                                                        </div>
                                                     </div>
-                                                    <br>
-                                                    <div class="box-element d-none" id="payment-info">
-                                                        <small>Payment Options</small>
-                                                        <button id="make-payment">Make Payment</button>
+                                                    <div class="col-lg-6">
+                                                        <div class="box-element" id="form-wrapper">
+                                                            <form id="form">
+                                                                <div id="user-info">
+                                                                    <br>
+                                                                    <br>
+                                                                    <br>
+                                                                    <div class="form-field">
+                                                                        <input required class="form-control" type="text" name="name" placeholder="Name..">
+                                                                    </div>
+                                                                    <div class="form-field">
+                                                                        <input required class="form-control" type="email" name="email" placeholder="Email..">
+                                                                    </div>
+                                                                </div>
+                                                                <div id="shipping-info">
+                                                                    <h5>Shipping Information:</h5>
+                                                                    <div class="form-field">
+                                                                        <input class="form-control" type="text" name="address" placeholder="Address..">
+                                                                    </div>
+                                                                    <div class="form-field">
+                                                                        <input class="form-control" type="text" name="city" placeholder="City..">
+                                                                    </div>
+                                                                    <div class="form-field">
+                                                                        <input class="form-control" type="text" name="state" placeholder="State..">
+                                                                    </div>
+                                                                    <div class="form-field">
+                                                                        <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                                                                    </div>
+                                                                    <div class="form-field">
+                                                                        <input class="form-control" type="text" name="country" placeholder="Zip code..">
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                                <input id="form-button" class="btn btn-success btn-block " type="submit" value="Continue">
+                                                            </form>
+                                                        </div>
+                                                        <br>
+                                                        <div class="box-element d-none" id="payment-info">
+                                                            <small>Payment Options</small>
+                                                            <button id="make-payment">Make Payment</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -296,9 +358,8 @@
                         </div>
                     </div>
                 </div>
+            </section>
         </div>
-    </section><!-- End Specials Section -->
-    </div>
     </section>
 </main><!-- End #main -->
 <script type="text/javascript">

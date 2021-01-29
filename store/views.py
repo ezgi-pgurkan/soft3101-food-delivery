@@ -12,11 +12,11 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from django.core.mail import send_mail
 from django.contrib.auth.forms import AuthenticationForm
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from .forms import *
 from .decorators import *
 from django.contrib.auth.models import Group
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, CreateView
 
 # Create your views here.
 
@@ -215,9 +215,8 @@ def store(request, restname):
     specialties=products.filter(category='Specialty')
     desserts=products.filter(category='Dessert')
     drinks=products.filter(category='Drink')
-    posts =Post.objects.all()
-    details = Post.objects.all()
-    context={'restaurant': restaurant, 'order': order, 'products': products, 'items': items, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks,'posts':posts, 'details':details}
+    reviews =Review.objects.filter(restaurant=restaurant)
+    context={'restaurant': restaurant, 'order': order, 'products': products, 'items': items, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks,'reviews':reviews}
     return render(request, 'store/store.html', context)
 
 #update order items in cart
@@ -317,7 +316,10 @@ def restaurantOwnerDashboard(request):
     #to display restaurant's orders
     orders=Order.objects.filter(restaurant=restaurant)
 
-    context={'restaurant': restaurant,  'products': products, 'orders': orders}
+    #to display restaurant's reviews
+    reviews =Review.objects.filter(restaurant=restaurant)
+
+    context={'restaurant': restaurant,  'products': products, 'orders': orders, 'reviews': reviews}
     return render(request, 'store/restaurant-owner-dashboard.html', context)
 
 #restaurant owner adds a new product to his restaurant
@@ -369,21 +371,25 @@ def deleteProduct(request, pk):
 
     return render(request, 'store/delete.html')
 
-#review
-class StoreView(ListView):
-    model = Post 
-    template_name = 'store/store.html'
 
 #review
-class CommentDetailView(DetailView):
-    model = Post
-    template_name = 'store/details.html'
+def addReviewView(request, restname):
+    rest = get_object_or_404(Restaurant, restname=restname)
+    customer=request.user.customer
+    
+    form = ReviewForm()
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review= Review.objects.create(author=customer, restaurant=rest)
+            review.title=form.cleaned_data.get('title')
+            review.body=form.cleaned_data.get('body')
+            review.save()  
+            return redirect('store', restname) 
 
-#review
-class AddPostView(CreateView):
-    model = Post
-    template_name = 'store/add_post.html'
-    fields = '__all__'
+    context = {'form':form, 'rest':rest, 'customer':customer}
+    return render(request, 'store/add_review.html', context)
+
 
 def notAuthorized(request):
     context = {}

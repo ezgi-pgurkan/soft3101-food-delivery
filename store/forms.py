@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import RegisteredUser, Customer, Product, Restaurant
+from .models import *
 from django.forms import ModelForm
 from phonenumber_field.formfields import PhoneNumberField
 
@@ -52,4 +52,12 @@ class CustomerForm(ModelForm):
         fields = ('name', 'surname', 'city', 'address', 'phone', 'profile_image')
 
 
- 
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ('title', 'body', 'author')
+        widgets = {
+                    'title': forms.TextInput(attrs={'class': 'form-conrol'}),
+                    'body': forms.Textarea(attrs={'class': 'form-conrol'}),
+                    'author': forms.TextInput(attrs={'class': 'form-conrol', 'value': '', 'id': 'elder', 'type': 'hidden'}),
+                }
