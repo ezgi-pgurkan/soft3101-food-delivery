@@ -1,0 +1,82 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Inner page header container -->
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Search</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>Search</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <!-- Inner page container -->
+    <section class="inner-page">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="section-title">
+                        <p>Choose A Restaurant</p>
+                        <section id="why-us" class="why-us">
+                            <div class="container" data-aos="fade-up">
+                                <div class="row">
+                                    {% for restaurant in restaurants %}
+                                    <div class="col-lg-4">
+                                        <div class="box" data-aos="zoom-in" data-aos-delay="100">
+                                            <a href="{% url 'store' restaurant.restname %}">
+                                                <div class="row justify-content-center">
+                                                    <img src="{{restaurant.logo.url}}" height="100">
+                                                </div>
+                                                <div class="row justify-content-center">
+                                                    <h4>{{restaurant.restname}}</h4>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </section><!-- End Why Us Section -->
+                    </div>
+                </div>
+                <div class="col-lg-1">
+                </div>
+                <div class="col-lg-3">
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h5></h5>
+                    <form method="get">
+                        <h4>Tag:</h4>
+                        {{myFilter.form.tag}}
+                        <hr>
+                        <h4>City:</h4>
+                        {{myFilter.form.city}}
+                        <hr>
+                        <h4>Restaurant Name:</h4>
+                        {{myFilter.form.restname}}
+                        <hr>
+
+                       
+
+                            <div class="btn">
+                                <button class="btn btn-lg btn-success" type="submit" style="width: 160px; height: 60px;" >Search</button>
+                            </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}
+<input type="radio" name="name_name" id="id_name" value="1" style="visibility: hidden;">
+<label class="btn btn-primary" for="id_name">1</label>
+<input type="radio" name="name_name" id="id_name2" value="2" style="visibility: hidden;">
+<label class="btn btn-primary" for="id_name2">2</label>

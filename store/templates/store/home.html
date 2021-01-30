@@ -13,10 +13,59 @@
     </div>
 </section><!-- End Hero -->
 <main id="main">
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <br>
+                <div class="row justify-content-center">
+                    <p>Choose A Cuisine</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-4">
+                    <div class="box" data-aos="zoom-in" data-aos-delay="100">
+                        <a href="{% url 'pizza' %}">
+                            <div class="row justify-content-center">
+                                <img src="{% static 'images/cart.png' %}" height="100">
+                            </div>
+                            <div class="row justify-content-center">
+                                <h4>Pizza</h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="box" data-aos="zoom-in" data-aos-delay="100">
+                        <a href="{% url 'fastfood' %}">
+                            <div class="row justify-content-center">
+                                <img src="{% static 'images/cart.png' %}" height="100">
+                            </div>
+                            <div class="row justify-content-center">
+                                <h4>Fast Food</h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="box" data-aos="zoom-in" data-aos-delay="100">
+                        <a href="{% url 'asian' %}">
+                            <div class="row justify-content-center">
+                                <img src="{% static 'images/cart.png' %}" height="100">
+                            </div>
+                            <div class="row justify-content-center">
+                                <h4>Asian</h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- ======= Why Us Section ======= -->
     <section id="why-us" class="why-us">
         <div class="container" data-aos="fade-up">
             <div class="section-title">
+                <h2>All Restaurants</h2>
                 <p>Choose A Restaurant</p>
             </div>
             <div class="row">

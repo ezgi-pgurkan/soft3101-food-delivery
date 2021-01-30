@@ -17,6 +17,7 @@ from .forms import *
 from .decorators import *
 from django.contrib.auth.models import Group
 from django.views.generic import ListView, CreateView
+from .filters import RestaurantFilter
 
 # Create your views here.
 
@@ -371,7 +372,6 @@ def deleteProduct(request, pk):
 
     return render(request, 'store/delete.html')
 
-
 #review
 def addReviewView(request, restname):
     rest = get_object_or_404(Restaurant, restname=restname)
@@ -390,7 +390,6 @@ def addReviewView(request, restname):
     context = {'form':form, 'rest':rest, 'customer':customer}
     return render(request, 'store/add_review.html', context)
 
-
 def notAuthorized(request):
     context = {}
     return render(request, 'store/not_authorized.html')
@@ -398,3 +397,35 @@ def notAuthorized(request):
 def cannotOrder(request):
     context = {}
     return render(request, 'store/cannotorder.html')
+
+#search & filter
+def searchRestaurant(request):
+    restaurants=Restaurant.objects.all()
+
+    myFilter=RestaurantFilter(request.GET, queryset=restaurants)
+    restaurants=myFilter.qs
+
+    context={'restaurants':restaurants, 'myFilter':myFilter}
+
+    return render(request, 'store/restaurant_search.html', context)
+
+def pizza(request):
+    restaurants=Restaurant.objects.filter(tag='Pizza')
+
+    context={'restaurants':restaurants}
+
+    return render(request, 'store/pizza.html', context)
+
+def fastfood(request):
+    restaurants=Restaurant.objects.filter(tag='FastFood')
+
+    context={'restaurants':restaurants}
+
+    return render(request, 'store/fastfood.html', context)
+
+def asian(request):
+    restaurants=Restaurant.objects.filter(tag='Asian')
+
+    context={'restaurants':restaurants}
+
+    return render(request, 'store/asian.html', context)

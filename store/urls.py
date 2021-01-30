@@ -30,6 +30,11 @@ urlpatterns = [
     path('add_review/<restname>/', views.addReviewView, name="add_review"),
     path('not_authorized/', views.notAuthorized, name="not_authorized"),
     path('cannotorder/', views.cannotOrder, name="cannotorder"),
+    path('restaurant_search/', views.searchRestaurant, name='restaurant_search'),
+    path('pizza/', views.pizza, name="pizza"),
+    path('fastfood/', views.fastfood, name="fastfood"),
+    path('asian/', views.asian, name="asian"),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

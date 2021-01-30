@@ -1,0 +1,43 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Inner page header container -->
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Asian</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>Asian</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <!-- Inner page container -->
+    <section id="why-us" class="why-us">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <p>Asian Restaurants</p>
+            </div>
+            <div class="row">
+                {% for restaurant in restaurants %}
+                <div class="col-lg-4">
+                    <div class="box" data-aos="zoom-in" data-aos-delay="100">
+                        <a href="{% url 'store' restaurant.restname %}">
+                            <div class="row justify-content-center">
+                                <img src="{{restaurant.logo.url}}" height="100">
+                            </div>
+                            <div class="row justify-content-center">
+                                <h4>{{restaurant.restname}}</h4>
+                            </div>
+                        </a>
+                    </div>
+                    <br>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section><!-- End Why Us Section -->
+</main><!-- End #main -->
+{% endblock %}
