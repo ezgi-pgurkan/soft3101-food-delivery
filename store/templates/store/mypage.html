@@ -42,7 +42,20 @@
                             <div class="section-title">
                                 <h2>Favorites</h2>
                                 <p>Your Favorite Restaurants</p>
+                                <hr class="white">
                                 <br>
+                                {% for favorite_restaurant in favorite_restaurants %}
+                                <a href="{% url 'store' favorite_restaurant.restname %}">
+                                    <div class="row justify-content-center">
+                                        <img src="{{favorite_restaurant.logo.url}}" height="100">
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <h4> {{favorite_restaurant.restname}}</h4>
+                                    </div>
+                                </a>
+                                {% empty %}
+                                <h4>You have no favorite restaurants.</h4>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-2">

@@ -26,8 +26,21 @@
             <section id="specials" class="specials">
                 <div class="container" data-aos="fade-up">
                     <div class="section-title">
+                         <div class="row">
                         <h2>Specials</h2>
-                        <p>{{restaurant.restname}}</p>
+                        </div>
+                        <div class="row">
+                            <p>{{restaurant.restname}} </p>
+                     
+                            <form action="{% url 'favorite' restaurant.restname %}" method="POST">
+                                {% csrf_token %}
+                                {% if favorited %}
+                                <button type="submit" name="favorite" value="{{ restaurant.restname }}" style=" border-color: transparent;  color: #cda45e; background-color: transparent; border-radius:50%"><i class="fas fa-heart fa-3x"></i></button>
+                                {% else %}
+                                <button type="submit" name="favorite" value="{{ restaurant.restname }}" style=" border-color: transparent; color: #cda45e; background-color: transparent; border-radius:50%"><i class="far fa-heart fa-3x"></i></button>
+                                {% endif %}
+                            </form>
+                        </div>
                     </div>
                     <div class="row" data-aos="fade-up" data-aos-delay="100">
                         <div class="col-lg-3">
@@ -259,7 +272,7 @@
                                                                 <h4>&#215; {{item.quantity}}</h4>
                                                                 <div class="quantity">
                                                                     <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up1.png' %}" height="20" weight="20">
-                                                                    <h6>  </h6>
+                                                                    <h6> </h6>
                                                                     <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down2.png' %}" height="20" weight="20">
                                                                 </div>
                                                             </div>

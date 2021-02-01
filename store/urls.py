@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from store import views
+from .views import FavoriteView
 from django.conf.urls.static import static
 from django.conf import settings 
 
@@ -35,6 +36,8 @@ urlpatterns = [
     path('fastfood/', views.fastfood, name="fastfood"),
     path('asian/', views.asian, name="asian"),
     path('mypage/', views.myPage, name="mypage"),
+    path('favorite/<restname>', FavoriteView, name='favorite'),
+
 
 
 ]

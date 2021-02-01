@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse 
 import json
 import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.forms import inlineformset_factory
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login, logout
@@ -217,7 +217,10 @@ def store(request, restname):
     desserts=products.filter(category='Dessert')
     drinks=products.filter(category='Drink')
     reviews =Review.objects.filter(restaurant=restaurant)
-    context={'restaurant': restaurant, 'order': order, 'products': products, 'items': items, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks,'reviews':reviews}
+    favorited = False
+    if restaurant.favorite.filter(userEmail_id=request.user.id).exists():
+        favorited = True
+    context={'restaurant': restaurant, 'order': order, 'products': products, 'items': items, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks,'reviews':reviews, 'favorited':favorited}
     return render(request, 'store/store.html', context)
 
 #update order items in cart
@@ -439,6 +442,21 @@ def myPage(request):
     #customer's reviews
     reviews=Review.objects.filter(author=customer)
 
-    context={'customer': customer, 'orders':orders, 'reviews':reviews}
+    #customer's favorite restaurants
+    favorite_restaurants=customer.favorite.all()
+
+    context={'cucustomerst': customer, 'orders':orders, 'reviews':reviews, 'favorite_restaurants':favorite_restaurants}
 
     return render(request, 'store/mypage.html', context)
+
+def FavoriteView(request, restname):
+    restaurant = get_object_or_404(Restaurant, restname=restname)
+    favorited=False
+    if restaurant.favorite.filter(userEmail_id=request.user.id).exists():
+        restaurant.favorite.remove(request.user.customer)
+        favorited=False
+    else:
+        restaurant.favorite.add(request.user.customer)
+        favorited=True
+    return HttpResponseRedirect(reverse('store', args=[str(restname)]))
+

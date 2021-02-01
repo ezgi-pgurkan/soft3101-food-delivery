@@ -122,8 +122,6 @@ class Restaurant(models.Model):
     restname = models.CharField(max_length=200, null=True)
     phone = PhoneNumberField(blank=True)
     address = models.CharField(max_length=300, null=True, blank=True) 
-    rate = models.DecimalField(null=True, blank=True, max_digits=2, decimal_places=1, default=Decimal(0.0))
-    rateCount = models.IntegerField(null=True, blank=True, default=0)
     image1 = models.ImageField(default='restaurant_defaultphoto.jpg')
     image2 = models.ImageField(default='restaurant_defaultphoto.jpg')
     image3 = models.ImageField(default='restaurant_defaultphoto.jpg')
@@ -137,6 +135,7 @@ class Restaurant(models.Model):
     workingHoursTo = models.CharField(max_length=200, null=True, blank=True)
     workingDaysFrom = models.CharField(max_length=200, null=True, blank=True)
     workingDaysTo = models.CharField(max_length=200, null=True, blank=True)
+    favorite= models.ManyToManyField(Customer, related_name='favorite', blank=True)
 
     def __str__(self):
         return self.userEmail.email
