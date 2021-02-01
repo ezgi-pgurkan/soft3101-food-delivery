@@ -34,7 +34,10 @@ urlpatterns = [
     path('pizza/', views.pizza, name="pizza"),
     path('fastfood/', views.fastfood, name="fastfood"),
     path('asian/', views.asian, name="asian"),
+    path('mypage/', views.myPage, name="mypage"),
+
 
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

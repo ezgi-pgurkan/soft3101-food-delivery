@@ -1,0 +1,143 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Inner page header container -->
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>My Page</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>My Page</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <!-- Inner page container -->
+    <!-- ======= Specials Section ======= -->
+    <section id="specials" class="specials">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <h2>Your Info</h2>
+                <p>Your Page</p>
+            </div>
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-3">
+                    <ul class="nav nav-tabs flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active show" data-toggle="tab" href="#tab-1">Favorites</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-2">Orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-3">Reviews</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9 mt-4 mt-lg-0">
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="tab-1">
+                            <div class="section-title">
+                                <h2>Favorites</h2>
+                                <p>Your Favorite Restaurants</p>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-2">
+                            <div class="section-title">
+                                <h2>Orders</h2>
+                                <p>Your Orders</p>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-8 details order-2 order-lg-1">
+                                        <table cellpadding="5" style="border: 1px solid white; text-align: center">
+                                            <tr style="border: 1px solid white;">
+                                                <th>
+                                                    <h6 style="font-size: 17px">Name</h6>
+                                                </th>
+                                                <th>
+                                                    <h6 style="font-size: 17px">Surname</h6>
+                                                </th>
+                                                <th>
+                                                    <h6 style="font-size: 17px">Address</h6>
+                                                </th>
+                                                <th>
+                                                    <h6 style="font-size: 17px">City</h6>
+                                                </th>
+                                                <th>
+                                                    <h6 style="font-size: 17px">Phone</h6>
+                                                </th>
+                                                <th>
+                                                    <h6 style="font-size: 17px">Transaction Id</h6>
+                                                </th>
+                                                <th>
+                                                    <h6 style="font-size: 17px">Date Ordered</h6>
+                                                </th>
+                                                <th>
+                                                    <h6 style="font-size: 17px">Order</h6>
+                                                </th>
+                                                <th>
+                                                    <h6 style="font-size: 17px">Total</h6>
+                                                </th>
+                                            </tr>
+                                            {% for order in orders reversed %}
+                                            <tr style="border: 1px solid white;">
+                                                <td>
+                                                    <h6 style="font-size: 17px">{{order.customer.name}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 style="font-size: 17px">{{order.customer.surname}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 style="font-size: 17px">{{order.customer.address}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 style="font-size: 17px">{{order.customer.city}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 style="font-size: 17px">{{order.customer.phone}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 style="font-size: 17px">{{order.transaction_id}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 style="font-size: 17px">{{order.date_ordered}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 style="font-size: 14px">{{order.get_cart_item_names}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 style="font-size: 14px">Total: ${{order.get_cart_total|floatformat:2}}</h6>
+                                                </td>
+                                            <tr>
+                                                {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-3">
+                            <div class="section-title">
+                                <h2>Reviews</h2>
+                                <p>Your Reviews</p>
+                                <br>
+                                <ul>
+                                    {% for review in reviews reversed %}
+                                    <hr class='white'>
+                                    <h2 style="color: #f0cd6c">{{review.restaurant.restname}}</h2>
+                                    <h3 style="color: #f0cd6c"><b>{{review.title}}</b></h3>
+                                    <h6><b>{{review.author.name}} - </b>{{review.body}}</h6>
+                                    <hr class='white'>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}

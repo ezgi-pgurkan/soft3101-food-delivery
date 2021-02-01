@@ -429,3 +429,16 @@ def asian(request):
     context={'restaurants':restaurants}
 
     return render(request, 'store/asian.html', context)
+
+def myPage(request):
+    customer = request.user.customer
+
+    #customer's orders
+    orders=Order.objects.filter(customer=customer)
+
+    #customer's reviews
+    reviews=Review.objects.filter(author=customer)
+
+    context={'customer': customer, 'orders':orders, 'reviews':reviews}
+
+    return render(request, 'store/mypage.html', context)

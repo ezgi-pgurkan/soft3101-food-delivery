@@ -12,6 +12,7 @@
                 <li class="active"><a href="{% url 'home' %}">Home</a></li>
                 {% if request.user.customer %}
                 <li><a href="{% url 'restaurant_search' %}">Restaurants</a></li>
+                <li><a href="{% url 'mypage' %}">My Page</a></li>
                 <li><a href="{% url 'account' %}">Profile</a></li>
                 {% endif %}
                 {% if not request.user.is_authenticated %}
@@ -34,4 +35,4 @@
         </nav><!-- .nav-menu -->
     </div>
 </header><!-- End Header -->
-<!-- End Header
+<!-- End Header -->
