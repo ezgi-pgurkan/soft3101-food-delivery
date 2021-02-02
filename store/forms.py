@@ -24,6 +24,7 @@ class CustomerCreationForm(UserCreationForm):
         fields = ('email', 'username', 'password1', 'password2', 'name', 'surname', 'city', 'address', 'phone')
         field_order=('email', 'username', 'password1', 'password2', 'name', 'surname', 'city','address', 'phone')
 
+
 class ProductForm(ModelForm):
     class Meta:
         model= Product

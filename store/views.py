@@ -21,11 +21,10 @@ from .filters import RestaurantFilter
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
 
-# Create your views here.
-
 def home(request):
     restaurants = Restaurant.objects.all()
     return render(request, 'store/home.html', {'restaurants': restaurants})
+
 
 #sign in for all users
 @unauthenticated_user
@@ -66,6 +65,7 @@ def signin(request):
         form = AuthenticationForm()
     return render(request, 'store/signin.html', {'form': form, 'error_message': error_message, })
 
+
 #customer sign up
 @unauthenticated_user
 def signup(request):
@@ -90,15 +90,19 @@ def signup(request):
         form = CustomerCreationForm()
     return render(request, 'store/signup.html', {'form': form})
 
+
+#sign out for all users
 def signout(request):
     logout(request)
     return redirect('signin')
+
 
 #restaurant registration
 @unauthenticated_user
 def registration(request):
     context = {}
     return render(request, 'store/registration.html')
+
 
 #restaurant registration - send form via email to register restaurant
 @unauthenticated_user
@@ -133,12 +137,14 @@ def application(request):
     else:
         return render(request, 'store/registration.html', {})
 
+
 #admin main page
 @allowed_users(allowed_roles=['admin'])
 def adminDashboard(request):
     restaurants=Restaurant.objects.all()
     context={'restaurants': restaurants}
     return render(request, 'store/admin-dashboard.html', context)
+
 
 #admin creates restaurant owner's account
 @allowed_users(allowed_roles=['admin'])
@@ -155,6 +161,7 @@ def createRestaurantUser(request):
        
     context={'form1': form1}
     return render(request, 'store/restaurantformfirst.html', context)
+
 
 #admin creates and adds restaurant to the database
 @allowed_users(allowed_roles=['admin'])
@@ -188,7 +195,6 @@ def createRestaurant(request):
     return render(request, 'store/restaurantformsecond.html', context)
 
 
-
 #admin deletes a restaurant
 @allowed_users(allowed_roles=['admin'])
 def deleteRestaurant(request, pk):
@@ -201,6 +207,7 @@ def deleteRestaurant(request, pk):
 
     context={'item': restaurant, 'restaurant': restaurant, 'restUser':restUser}
     return render(request, 'store/delete-restaurant.html', context)
+
 
 #customer's view of a restaurant page
 @canorder(allowed_roles=['customer'])
@@ -226,6 +233,7 @@ def store(request, restname):
         favorited = True
     context={'restaurant': restaurant, 'order': order, 'products': products, 'items': items, 'cartItems': cartItems, 'starters': starters, 'salads': salads, 'specialties': specialties, 'desserts': desserts, 'drinks': drinks,'reviews':reviews, 'favorited':favorited}
     return render(request, 'store/store.html', context)
+
 
 #update order items in cart
 @canorder(allowed_roles=['customer'])
@@ -253,6 +261,7 @@ def updateItem(request):
         orderItem.delete()
 
     return JsonResponse('Item was added',  safe=False)
+
 
 #payment
 @canorder(allowed_roles=['customer'])
@@ -286,6 +295,111 @@ def processOrder(request, restname):
 
     return JsonResponse('Payment submitted..', safe=False)
 
+
+#review
+def addReviewView(request, restname):
+    rest = get_object_or_404(Restaurant, restname=restname)
+    customer=request.user.customer
+    
+    form = ReviewForm()
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review= Review.objects.create(author=customer, restaurant=rest)
+            review.body=form.cleaned_data.get('body')
+            review.save()  
+            return redirect('store', restname) 
+
+    context = {'form':form, 'rest':rest, 'customer':customer}
+    return render(request, 'store/add_review.html', context)
+
+
+#restaurant search & filter
+def searchRestaurant(request):
+    restaurants=Restaurant.objects.all()
+
+    myFilter=RestaurantFilter(request.GET, queryset=restaurants)
+    restaurants=myFilter.qs
+
+    context={'restaurants':restaurants, 'myFilter':myFilter}
+
+    return render(request, 'store/restaurant_search.html', context)
+
+#restaurants filtered by Pizza
+def pizza(request):
+    restaurants=Restaurant.objects.filter(tag='Pizza')
+
+    context={'restaurants':restaurants}
+
+    return render(request, 'store/pizza.html', context)
+
+
+#restaurants filtered by Fast Food
+def fastfood(request):
+    restaurants=Restaurant.objects.filter(tag='FastFood')
+
+    context={'restaurants':restaurants}
+
+    return render(request, 'store/fastfood.html', context)
+
+
+#restaurants filtered by Asian
+def asian(request):
+    restaurants=Restaurant.objects.filter(tag='Asian')
+
+    context={'restaurants':restaurants}
+
+    return render(request, 'store/asian.html', context)
+
+
+#restaurants filtered by Bakery
+def bakery(request):
+    restaurants=Restaurant.objects.filter(tag='Bakery')
+
+    context={'restaurants':restaurants}
+
+    return render(request, 'store/bakery.html', context)
+
+
+#restaurants filtered by Desserts
+def dessert(request):
+    restaurants=Restaurant.objects.filter(tag='Desserts')
+
+    context={'restaurants':restaurants}
+
+    return render(request, 'store/dessert.html', context)
+
+#customer's page
+def myPage(request):
+    customer = request.user.customer
+
+    #customer's orders
+    orders=Order.objects.filter(customer=customer)
+
+    #customer's reviews
+    reviews=Review.objects.filter(author=customer)
+
+    #customer's favorite restaurants
+    favorite_restaurants=customer.favorite.all()
+
+    context={'cucustomerst': customer, 'orders':orders, 'reviews':reviews, 'favorite_restaurants':favorite_restaurants}
+
+    return render(request, 'store/mypage.html', context)
+
+
+#customer's favorite restaurants
+def FavoriteView(request, restname):
+    restaurant = get_object_or_404(Restaurant, restname=restname)
+    favorited=False
+    if restaurant.favorite.filter(userEmail_id=request.user.id).exists():
+        restaurant.favorite.remove(request.user.customer)
+        favorited=False
+    else:
+        restaurant.favorite.add(request.user.customer)
+        favorited=True
+    return HttpResponseRedirect(reverse('store', args=[str(restname)]))
+
+
 #customer account settings
 @allowed_users(allowed_roles=['customer'])
 def accountSettings(request):
@@ -312,8 +426,19 @@ def deleteProfile(request, pk):
     context = {'user': user}
     return render(request, 'store/delete_profile.html', context)
 
-#restaurant owner main page
 
+#change password
+class PasswordsChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('password_success')
+
+
+#password succeffully changed message
+def password_success(request):
+    return render(request, 'store/password_success.html', {})
+
+
+#restaurant owner main page
 @allowed_users(allowed_roles=['restaurant'])
 def restaurantOwnerDashboard(request):
     restaurant = request.user.restaurant
@@ -330,7 +455,8 @@ def restaurantOwnerDashboard(request):
     context={'restaurant': restaurant,  'products': products, 'orders': orders, 'reviews': reviews}
     return render(request, 'store/restaurant-owner-dashboard.html', context)
 
-#restaurant owner adds a new product to his restaurant
+
+#restaurant owner adds a new product to their restaurant
 @allowed_users(allowed_roles=['restaurant'])
 def createProduct(request):
     restaurant_instance = request.user.restaurant
@@ -346,7 +472,8 @@ def createProduct(request):
     context={ 'restaurant_instance': restaurant_instance, 'form': form}
     return render(request, 'store/productform.html', context)
 
-#restaurant owner updates a product from his restaurant
+
+#restaurant owner updates a product from their restaurant
 @allowed_users(allowed_roles=['restaurant'])
 def updateProduct(request, pk):
     restaurant_instance = request.user.restaurant
@@ -368,7 +495,8 @@ def updateProduct(request, pk):
     context={'restaurant_instance': restaurant_instance, 'form': form}
     return render(request, 'store/productform.html', context)
 
-#restaurant owner deletes a product from his restaurant
+
+#restaurant owner deletes a product from their restaurant
 @allowed_users(allowed_roles=['restaurant'])
 def deleteProduct(request, pk):
     product=Product.objects.get(id=pk)
@@ -377,119 +505,11 @@ def deleteProduct(request, pk):
         product.save()
         return redirect('restOwner')
 
-    return render(request, 'store/delete.html')
-
-#review
-def addReviewView(request, restname):
-    rest = get_object_or_404(Restaurant, restname=restname)
-    customer=request.user.customer
-    
-    form = ReviewForm()
-    if request.method == 'POST':
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review= Review.objects.create(author=customer, restaurant=rest)
-            review.body=form.cleaned_data.get('body')
-            review.save()  
-            return redirect('store', restname) 
-
-    context = {'form':form, 'rest':rest, 'customer':customer}
-    return render(request, 'store/add_review.html', context)
-
-def notAuthorized(request):
-    context = {}
-    return render(request, 'store/not_authorized.html')
-
-def cannotOrder(request):
-    context = {}
-    return render(request, 'store/cannotorder.html')
-
-#search & filter
-def searchRestaurant(request):
-    restaurants=Restaurant.objects.all()
-
-    myFilter=RestaurantFilter(request.GET, queryset=restaurants)
-    restaurants=myFilter.qs
-
-    context={'restaurants':restaurants, 'myFilter':myFilter}
-
-    return render(request, 'store/restaurant_search.html', context)
-
-def pizza(request):
-    restaurants=Restaurant.objects.filter(tag='Pizza')
-
-    context={'restaurants':restaurants}
-
-    return render(request, 'store/pizza.html', context)
-
-def fastfood(request):
-    restaurants=Restaurant.objects.filter(tag='FastFood')
-
-    context={'restaurants':restaurants}
-
-    return render(request, 'store/fastfood.html', context)
-
-def asian(request):
-    restaurants=Restaurant.objects.filter(tag='Asian')
-
-    context={'restaurants':restaurants}
-
-    return render(request, 'store/asian.html', context)
+    return render(request, 'store/delete_product.html')
 
 
-class PasswordsChangeView(PasswordChangeView):
-    form_class = PasswordChangeForm
-    success_url = reverse_lazy('password_success')
-
-def password_success(request):
-    return render(request, 'store/password_success.html', {})
-
-
-def bakery(request):
-    restaurants=Restaurant.objects.filter(tag='Bakery')
-
-    context={'restaurants':restaurants}
-
-    return render(request, 'store/bakery.html', context)
-
-def dessert(request):
-    restaurants=Restaurant.objects.filter(tag='Desserts')
-
-    context={'restaurants':restaurants}
-
-    return render(request, 'store/dessert.html', context)
-
-
-def myPage(request):
-    customer = request.user.customer
-
-    #customer's orders
-    orders=Order.objects.filter(customer=customer)
-
-    #customer's reviews
-    reviews=Review.objects.filter(author=customer)
-
-    #customer's favorite restaurants
-    favorite_restaurants=customer.favorite.all()
-
-    context={'cucustomerst': customer, 'orders':orders, 'reviews':reviews, 'favorite_restaurants':favorite_restaurants}
-
-    return render(request, 'store/mypage.html', context)
-
-def FavoriteView(request, restname):
-    restaurant = get_object_or_404(Restaurant, restname=restname)
-    favorited=False
-    if restaurant.favorite.filter(userEmail_id=request.user.id).exists():
-        restaurant.favorite.remove(request.user.customer)
-        favorited=False
-    else:
-        restaurant.favorite.add(request.user.customer)
-        favorited=True
-    return HttpResponseRedirect(reverse('store', args=[str(restname)]))
-
-
-#admin deletes reviews,,, reversematch hata???*******
-@allowed_users(allowed_roles=['admin', 'restaurant'])
+#restaurant owner deletes a review about their restaurant
+@allowed_users(allowed_roles=['restaurant'])
 def deleteReview(request, pk):
     review = Review.objects.get(id=pk)
     if request.method == "POST":
@@ -501,7 +521,7 @@ def deleteReview(request, pk):
     return render(request, 'store/delete_review.html', context)
 
 
-#comment
+#restaurant owner replies to a review about their restaurant
 def addCommentView(request, pk):
     restaurant=request.user.restaurant
     review = Review.objects.get(id=pk)
@@ -519,6 +539,7 @@ def addCommentView(request, pk):
     return render(request, 'store/add_comment.html', context)
 
 
+#restaurant owner deletes their reply to a review about their restaurant
 def deleteComment(request, pk):
     comment = Comment.objects.get(id=pk)
     if request.method == "POST":
@@ -527,6 +548,24 @@ def deleteComment(request, pk):
 
     context = {'comment': comment}
     return render(request, 'store/delete_comment.html', context)
+
+
+#role not authorized to view the page
+def notAuthorized(request):
+    context = {}
+    return render(request, 'store/not_authorized.html')
+
+
+#role is not a customer, so cannot order from a restaurant
+def cannotOrder(request):
+    context = {}
+    return render(request, 'store/cannotorder.html')
+
+
+
+
+
+
 
 
 

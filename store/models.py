@@ -4,11 +4,6 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.urls import reverse
 from phonenumber_field.modelfields import PhoneNumberField
-# Create your models here.
-
-from django.db import models
-
-# Create your models here.
 
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -38,6 +33,7 @@ class MyAccountManager(BaseUserManager):
         user.is_superuser=True
         user.save(using=self._db)
         return user
+
 
 class RegisteredUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
@@ -69,6 +65,7 @@ class RegisteredUser(AbstractBaseUser, PermissionsMixin):
 
     def has_module_perms(self, app_label):
         return True
+
 
 class Customer(models.Model):
     userEmail=models.OneToOneField(RegisteredUser, on_delete=models.CASCADE, primary_key=True)  
@@ -180,6 +177,7 @@ class Product(models.Model):
             url = ''
         return url
 
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, related_name='orders', on_delete=models.SET_NULL, null=True, blank=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
@@ -216,6 +214,7 @@ class Order(models.Model):
         total = str([str(item.product.name) + str(' x') + str (item.quantity) for item in orderitems])
         return total 
 
+
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
@@ -226,6 +225,7 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
+
 
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
@@ -245,9 +245,7 @@ class Review(models.Model):
     author = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     restaurant = models.ForeignKey(Restaurant, related_name='reviews', on_delete=models.SET_NULL, null=True, blank=True)
     date_added=models.DateTimeField(auto_now_add=True)
-
-    #add date??
-
+    
     def str(self):
         return str(self.author.name) + ' | ' + str(self.body)
 

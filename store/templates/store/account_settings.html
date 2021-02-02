@@ -17,38 +17,57 @@
     <!-- Inner page container -->
     <section class="inner-page">
         <div class="container">
-            <p>
-                <style>
-                    .profile-pic{
-		max-width: 200px;		
-		max-height:200px;
-		margin: 0 auto;
-		border-radius: 50%;
-	}
+            <style>
+                .profile-pic{
+        max-width: 200px;       
+        max-height:200px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
 </style>
-                <br>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="card card-body">
-                            <a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Homepage</a>
-                            <hr>
-                            <h3 style="color:red; text-align: center">Edit Profile</h3>
-                            <hr>
-                            <img class="profile-pic" src="{{request.user.customer.profile_image.url}}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-2 col-form-label">
-                            <form method="POST" action="" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                {{form.as_p}}
-                                <td><a class="btn btn-sm btn-danger" href="{% url 'delete_profile' user.id %}">Delete Profile</a></td>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-3 col-form-label">
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-body">
+                        <a class="btn btn-warning" href="{% url 'home' %}"> &#8592; Back to Homepage</a>
+                        <hr>
+                        <h3 style="color:red; text-align: center"><b>Edit Profile</b></h3>
+                        <hr>
+                        <img class="profile-pic" src="{{request.user.customer.profile_image.url}}">
+                        <br>
+                        <a class="btn btn-success" href="{% url 'changepassword' %}">Change Password</a>
                     </div>
                 </div>
-            </p>
+                <div class="form-group">
+                    <div class="col-sm-8 col-form-label">
+                        <form method="POST" action="" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <h5>Name:</h5>
+                            {{form.name}}
+                            <p></p>
+                            <h5>Surname:</h5>
+                            {{form.surname}}
+                            <p></p>
+                            <h5>City:</h5>
+                            {{form.city}}
+                            <p></p>
+                            <h5>Address:</h5>
+                            {{form.address}}
+                            <p></p>
+                            <h5>Phone:</h5>
+                            {{form.phone}}
+                            <p></p>
+                            <h5>Profile Image:</h5>
+                            {{form.profile_image}}
+                            <p></p>
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a class="btn btn-danger" href="{% url 'delete_profile' user.id %}">Delete Profile</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </main><!-- End #main -->

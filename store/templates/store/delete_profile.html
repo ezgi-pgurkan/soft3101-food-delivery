@@ -17,21 +17,13 @@
     <!-- Inner page container -->
     <section class="inner-page">
         <div class="container">
-            <p>
-                <p>Are you sure you want to delete your profile?</p>
-                <form action="{% url 'delete_profile' user.id %}" method="POST">
-                    {% csrf_token %}
-                    <a href="{% url 'home' %}">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Yes</button>
-                </form>
-            </p>
+            <h5>Are you sure you want to delete your profile?</h5>
+            <form action="{% url 'delete_profile' user.id %}" method="POST">
+                {% csrf_token %}
+                <a href="{% url 'account' %}" class="btn btn-sm btn-outline-secondary">Cancel</a>
+                <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger delete-btn">
+            </form>
         </div>
     </section>
 </main><!-- End #main -->
 {% endblock %}
-<!--
-<form action="" method="POST">
-                {% csrf_token %}
-                <a href="{% url 'home' %}" class="btn btn-sm btn-outline-secondary">Cancel</a>
-                <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger delete-btn">
-            </form>-->

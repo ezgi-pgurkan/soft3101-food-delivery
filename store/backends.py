@@ -2,7 +2,6 @@ from django.contrib.auth import login
 from .models import RegisteredUser
 import logging
 
-
 class MyAuthBackend(object):
     def authenticate(self, email, password):
         try:
@@ -17,6 +16,7 @@ class MyAuthBackend(object):
         except Exception as e:
             logging.getLogger("error_logger").error(repr(e))
             return None
+
 
     def get_user(self, user_id):
         try:
