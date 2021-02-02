@@ -144,7 +144,7 @@
                                     {% for review in reviews reversed %}
                                     <hr class='white'>
                                     <h2 style="color: #f0cd6c">{{review.restaurant.restname}}</h2>
-                                    <h3 style="color: #f0cd6c"><b>{{review.title}}</b></h3>
+                                    <h3 style="color: #f0cd6c"><b>{{review.author.name}} - {{review.date_added}}</b></h3>
                                     <h6><b>{{review.author.name}} - </b>{{review.body}}</h6>
                                     <hr class='white'>
                                     {% endfor %}

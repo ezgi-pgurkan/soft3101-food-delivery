@@ -55,9 +55,8 @@ class CustomerForm(ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ('title', 'body', 'author')
+        fields = ('body', 'author')
         widgets = {
-                    'title': forms.TextInput(attrs={'class': 'form-conrol'}),
                     'body': forms.Textarea(attrs={'class': 'form-conrol'}),
                     'author': forms.TextInput(attrs={'class': 'form-conrol', 'value': '', 'id': 'elder', 'type': 'hidden'}),
                 }

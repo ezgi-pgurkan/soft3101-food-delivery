@@ -241,16 +241,32 @@ class ShippingAddress(models.Model):
 
 
 class Review(models.Model):
-    title = models.CharField(max_length=255)
     body = models.TextField()
     author = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True)
     restaurant = models.ForeignKey(Restaurant, related_name='reviews', on_delete=models.SET_NULL, null=True, blank=True)
+    date_added=models.DateTimeField(auto_now_add=True)
 
-    
+    #add date??
+
     def str(self):
-        return self.title + ' | ' + str(self.author.name)
+        return str(self.author.name) + ' | ' + str(self.body)
 
     def __str__(self):
-        return self.title 
+        return self.body 
+
+
+class Comment(models.Model):
+    review=models.ForeignKey(Review, related_name='comments', on_delete=models.CASCADE, null=True, blank=True)
+    body = models.TextField()
+    author = models.ForeignKey(Restaurant, on_delete=models.CASCADE, null=True)
+    date_added=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return  '%s - %s' % (self.review.body, self.author.restname)
+
+
+
+
+
 
        

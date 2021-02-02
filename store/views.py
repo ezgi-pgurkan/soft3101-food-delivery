@@ -193,11 +193,13 @@ def createRestaurant(request):
 @allowed_users(allowed_roles=['admin'])
 def deleteRestaurant(request, pk):
     restaurant=Restaurant.objects.get(userEmail_id=pk)
+    restUser=RegisteredUser.objects.get(userEmail_id=pk)
     if request.method=='POST':
         restaurant.delete()
+        restUser.delete()
         return redirect('adminpage')
 
-    context={'item': restaurant, 'restaurant': restaurant}
+    context={'item': restaurant, 'restaurant': restaurant, 'restUser':restUser}
     return render(request, 'store/delete-restaurant.html', context)
 
 #customer's view of a restaurant page
@@ -387,7 +389,6 @@ def addReviewView(request, restname):
         form = ReviewForm(request.POST)
         if form.is_valid():
             review= Review.objects.create(author=customer, restaurant=rest)
-            review.title=form.cleaned_data.get('title')
             review.body=form.cleaned_data.get('body')
             review.save()  
             return redirect('store', restname) 

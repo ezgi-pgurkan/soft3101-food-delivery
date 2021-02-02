@@ -185,8 +185,8 @@
                                         <ul>
                                             {% for review in reviews reversed %}
                                             <hr class='white'>
-                                            <h4 style="color: #f0cd6c"><b>{{review.title}}</b></h4>
-                                            <h6><b>{{review.author.name}} - </b>{{review.body}}</h6>
+                                            <h3 style="color: #f0cd6c"><b>{{review.author.name}} - {{review.date_added}}</b></h3>
+                                            <h6>{{review.body}}</h6>
                                             <a href="{% url 'delete_review' review.id %}"> <button class="btn btn-lg btn-outline-success add-btn" style="float: right">Delete a Review</button></a>
                                             <hr class='white'>
                                             {% endfor %}
@@ -194,147 +194,144 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-3">
-
                                     <div class="section-title">
                                         <h2>Gallery</h2>
                                         <p>Your Photos</p>
                                         <br>
-                                    
-                                    <!-- ======= Gallery Section ======= -->
-                                    <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
-                                        <div class="row no-gutters">
-                                            <div class="col-lg-3 col-md-4">
-                                                <div class="gallery-item">
-                                                    <a href="{{restaurant.image1.url}}" class="venobox" data-gall="gallery-item">
-                                                        <img src="{{restaurant.image1.url}}" alt="" class="img-fluid">
-                                                    </a>
+                                        <!-- ======= Gallery Section ======= -->
+                                        <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+                                            <div class="row no-gutters">
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image1.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image1.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-4">
-                                                <div class="gallery-item">
-                                                    <a href="{{restaurant.image2.url}}" class="venobox" data-gall="gallery-item">
-                                                        <img src="{{restaurant.image2.url}}" alt="" class="img-fluid">
-                                                    </a>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image2.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image2.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-4">
-                                                <div class="gallery-item">
-                                                    <a href="{{restaurant.image3.url}}" class="venobox" data-gall="gallery-item">
-                                                        <img src="{{restaurant.image3.url}}" alt="" class="img-fluid">
-                                                    </a>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image3.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image3.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-4">
-                                                <div class="gallery-item">
-                                                    <a href="{{restaurant.image4.url}}" class="venobox" data-gall="gallery-item">
-                                                        <img src="{{restaurant.image4.url}}" alt="" class="img-fluid">
-                                                    </a>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image4.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image4.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-4">
-                                                <div class="gallery-item">
-                                                    <a href="{{restaurant.image5.url}}" class="venobox" data-gall="gallery-item">
-                                                        <img src="{{restaurant.image5.url}}" alt="" class="img-fluid">
-                                                    </a>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image5.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image5.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-4">
-                                                <div class="gallery-item">
-                                                    <a href="{{restaurant.image6.url}}" class="venobox" data-gall="gallery-item">
-                                                        <img src="{{restaurant.image6.url}}" alt="" class="img-fluid">
-                                                    </a>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image6.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image6.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-4">
-                                                <div class="gallery-item">
-                                                    <a href="{{restaurant.image7.url}}" class="venobox" data-gall="gallery-item">
-                                                        <img src="{{restaurant.image7.url}}" alt="" class="img-fluid">
-                                                    </a>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image7.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image7.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-4">
-                                                <div class="gallery-item">
-                                                    <a href="{{restaurant.image8.url}}" class="venobox" data-gall="gallery-item">
-                                                        <img src="{{restaurant.image8.url}}" alt="" class="img-fluid">
-                                                    </a>
+                                                <div class="col-lg-3 col-md-4">
+                                                    <div class="gallery-item">
+                                                        <a href="{{restaurant.image8.url}}" class="venobox" data-gall="gallery-item">
+                                                            <img src="{{restaurant.image8.url}}" alt="" class="img-fluid">
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
-                                    
                                 </div>
                                 <div class="tab-pane" id="tab-4">
                                     <div class="section-title">
                                         <h2>Orders</h2>
                                         <p>Your Orders</p>
-                                   <br>
-                                    <div class="row">
-                                        <div class="col-lg-8 details order-2 order-lg-1">
-                                            <table cellpadding="5" style="border: 1px solid white; text-align: center">
-                                                <tr style="border: 1px solid white;">
-                                                    <th>
-                                                        <h6 style="font-size: 17px">Name</h6>
-                                                    </th>
-                                                    <th>
-                                                        <h6 style="font-size: 17px">Surname</h6>
-                                                    </th>
-                                                    <th>
-                                                        <h6 style="font-size: 17px">Address</h6>
-                                                    </th>
-                                                    <th>
-                                                        <h6 style="font-size: 17px">City</h6>
-                                                    </th>
-                                                    <th>
-                                                        <h6 style="font-size: 17px">Phone</h6>
-                                                    </th>
-                                                    <th>
-                                                        <h6 style="font-size: 17px">Transaction Id</h6>
-                                                    </th>
-                                                    <th>
-                                                        <h6 style="font-size: 17px">Date Ordered</h6>
-                                                    </th>
-                                                    <th>
-                                                        <h6 style="font-size: 17px">Order</h6>
-                                                    </th>
-                                                    <th>
-                                                        <h6 style="font-size: 17px">Total</h6>
-                                                    </th>
-                                                </tr>
-                                                {% for order in orders reversed %}
-                                                <tr style="border: 1px solid white;">
-                                                    <td>
-                                                        <h6 style="font-size: 17px">{{order.customer.name}}</h6>
-                                                    </td>
-                                                    <td>
-                                                        <h6 style="font-size: 17px">{{order.customer.surname}}</h6>
-                                                    </td>
-                                                    <td>
-                                                        <h6 style="font-size: 17px">{{order.customer.address}}</h6>
-                                                    </td>
-                                                    <td>
-                                                        <h6 style="font-size: 17px">{{order.customer.city}}</h6>
-                                                    </td>
-                                                    <td>
-                                                        <h6 style="font-size: 17px">{{order.customer.phone}}</h6>
-                                                    </td>
-                                                    <td>
-                                                        <h6 style="font-size: 17px">{{order.transaction_id}}</h6>
-                                                    </td>
-                                                    <td>
-                                                        <h6 style="font-size: 17px">{{order.date_ordered}}</h6>
-                                                    </td>
-                                                    <td>
-                                                        <h6 style="font-size: 14px">{{order.get_cart_item_names}}</h6>
-                                                    </td>
-                                                    <td>
-                                                        <h6 style="font-size: 14px">Total: ${{order.get_cart_total|floatformat:2}}</h6>
-                                                    </td>
-                                                <tr>
-                                                    {% endfor %}
-                                            </table>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-lg-8 details order-2 order-lg-1">
+                                                <table cellpadding="5" style="border: 1px solid white; text-align: center">
+                                                    <tr style="border: 1px solid white;">
+                                                        <th>
+                                                            <h6 style="font-size: 17px">Name</h6>
+                                                        </th>
+                                                        <th>
+                                                            <h6 style="font-size: 17px">Surname</h6>
+                                                        </th>
+                                                        <th>
+                                                            <h6 style="font-size: 17px">Address</h6>
+                                                        </th>
+                                                        <th>
+                                                            <h6 style="font-size: 17px">City</h6>
+                                                        </th>
+                                                        <th>
+                                                            <h6 style="font-size: 17px">Phone</h6>
+                                                        </th>
+                                                        <th>
+                                                            <h6 style="font-size: 17px">Transaction Id</h6>
+                                                        </th>
+                                                        <th>
+                                                            <h6 style="font-size: 17px">Date Ordered</h6>
+                                                        </th>
+                                                        <th>
+                                                            <h6 style="font-size: 17px">Order</h6>
+                                                        </th>
+                                                        <th>
+                                                            <h6 style="font-size: 17px">Total</h6>
+                                                        </th>
+                                                    </tr>
+                                                    {% for order in orders reversed %}
+                                                    <tr style="border: 1px solid white;">
+                                                        <td>
+                                                            <h6 style="font-size: 17px">{{order.customer.name}}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 style="font-size: 17px">{{order.customer.surname}}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 style="font-size: 17px">{{order.customer.address}}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 style="font-size: 17px">{{order.customer.city}}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 style="font-size: 17px">{{order.customer.phone}}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 style="font-size: 17px">{{order.transaction_id}}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 style="font-size: 17px">{{order.date_ordered}}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 style="font-size: 14px">{{order.get_cart_item_names}}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 style="font-size: 14px">Total: ${{order.get_cart_total|floatformat:2}}</h6>
+                                                        </td>
+                                                    <tr>
+                                                        {% endfor %}
+                                                </table>
+                                            </div>
                                         </div>
-                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-5">
