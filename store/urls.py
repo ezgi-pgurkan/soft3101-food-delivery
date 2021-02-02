@@ -2,9 +2,11 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from store import views
-from .views import FavoriteView
+from .views import FavoriteView, PasswordsChangeView
 from django.conf.urls.static import static
-from django.conf import settings 
+from django.conf import settings
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     #Leave as empty string for base url
@@ -35,10 +37,13 @@ urlpatterns = [
     path('pizza/', views.pizza, name="pizza"),
     path('fastfood/', views.fastfood, name="fastfood"),
     path('asian/', views.asian, name="asian"),
+    path('password/', PasswordsChangeView.as_view(template_name='store/changepassword.html'), name="changepassword"),
+    path('password_success/', views.password_success, name="password_success"),
+    path('bakery/', views.bakery, name="bakery"),
+    path('dessert/', views.dessert, name="dessert"),
     path('mypage/', views.myPage, name="mypage"),
     path('favorite/<restname>', FavoriteView, name='favorite'),
-
-
+    path('delete_review/<str:pk>', views.deleteReview, name='delete_review'),
 
 ]
 

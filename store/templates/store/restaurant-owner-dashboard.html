@@ -187,6 +187,7 @@
                                             <hr class='white'>
                                             <h4 style="color: #f0cd6c"><b>{{review.title}}</b></h4>
                                             <h6><b>{{review.author.name}} - </b>{{review.body}}</h6>
+                                            <a href="{% url 'delete_review' review.id %}"> <button class="btn btn-lg btn-outline-success add-btn" style="float: right">Delete a Review</button></a>
                                             <hr class='white'>
                                             {% endfor %}
                                         </ul>

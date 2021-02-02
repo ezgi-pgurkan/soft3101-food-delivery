@@ -26,6 +26,7 @@
                 <li><a href="{% url 'adminpage' %}">Admin Board</a></li>
                 {% endif %}
                 {% if request.user.is_authenticated %}
+                <li><a href="{% url 'changepassword' %}">Change Password</a></li>
                 <li><a href="{% url 'signout' %}">Sign Out</a></li>
                 {% endif %}
                 {% if not request.user.is_authenticated %}

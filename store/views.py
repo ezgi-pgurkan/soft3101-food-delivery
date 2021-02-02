@@ -18,6 +18,8 @@ from .decorators import *
 from django.contrib.auth.models import Group
 from django.views.generic import ListView, CreateView
 from .filters import RestaurantFilter
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import PasswordChangeForm
 
 # Create your views here.
 
@@ -433,6 +435,30 @@ def asian(request):
 
     return render(request, 'store/asian.html', context)
 
+
+class PasswordsChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url = reverse_lazy('password_success')
+
+def password_success(request):
+    return render(request, 'store/password_success.html', {})
+
+
+def bakery(request):
+    restaurants=Restaurant.objects.filter(tag='Bakery')
+
+    context={'restaurants':restaurants}
+
+    return render(request, 'store/bakery.html', context)
+
+def dessert(request):
+    restaurants=Restaurant.objects.filter(tag='Desserts')
+
+    context={'restaurants':restaurants}
+
+    return render(request, 'store/dessert.html', context)
+
+
 def myPage(request):
     customer = request.user.customer
 
@@ -459,4 +485,20 @@ def FavoriteView(request, restname):
         restaurant.favorite.add(request.user.customer)
         favorited=True
     return HttpResponseRedirect(reverse('store', args=[str(restname)]))
+
+
+#admin deletes reviews,,, reversematch hata???*******
+@allowed_users(allowed_roles=['admin', 'restaurant'])
+def deleteReview(request, pk):
+    review = Review.objects.get(id=pk)
+    if request.method == "POST":
+        review.delete()
+        #bak!!!
+        return redirect('restOwner') 
+
+    context = {'review': review}
+    return render(request, 'store/delete_review.html', context)
+
+
+
 

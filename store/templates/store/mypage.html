@@ -95,7 +95,9 @@
                                                     <h6 style="font-size: 17px">Total</h6>
                                                 </th>
                                             </tr>
+
                                             {% for order in orders reversed %}
+                                            {% if order.complete == True %}
                                             <tr style="border: 1px solid white;">
                                                 <td>
                                                     <h6 style="font-size: 17px">{{order.customer.name}}</h6>
@@ -125,7 +127,9 @@
                                                     <h6 style="font-size: 14px">Total: ${{order.get_cart_total|floatformat:2}}</h6>
                                                 </td>
                                             <tr>
+                                                {% endif %}
                                                 {% endfor %}
+                                                
                                         </table>
                                     </div>
                                 </div>

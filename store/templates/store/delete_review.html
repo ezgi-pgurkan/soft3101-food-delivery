@@ -1,0 +1,31 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<!-- Inner page header container -->
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Delete Review</h2>
+                <ol>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li>Delete Review</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+    <!-- Inner page container -->
+    <section class="inner-page">
+        <div class="container">
+            <p>
+                <p>Are you sure you want to delete this review?</p>
+                <form action="{% url 'delete_review' review.id %}" method="POST">
+                    {% csrf_token %}
+                    <a href="{% url 'home' %}">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                </form>
+            </p>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}
