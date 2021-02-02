@@ -501,5 +501,32 @@ def deleteReview(request, pk):
     return render(request, 'store/delete_review.html', context)
 
 
+#comment
+def addCommentView(request, pk):
+    restaurant=request.user.restaurant
+    review = Review.objects.get(id=pk)
+    
+    form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment= Comment.objects.create(author=restaurant, review=review)
+            comment.body=form.cleaned_data.get('body')
+            comment.save()  
+            return redirect('restOwner') 
+
+    context = {'form':form, 'restaurant':restaurant, 'review':review}
+    return render(request, 'store/add_comment.html', context)
+
+
+def deleteComment(request, pk):
+    comment = Comment.objects.get(id=pk)
+    if request.method == "POST":
+        comment.delete()
+        return redirect('restOwner') 
+
+    context = {'comment': comment}
+    return render(request, 'store/delete_comment.html', context)
+
 
 

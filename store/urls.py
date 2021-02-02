@@ -44,6 +44,8 @@ urlpatterns = [
     path('mypage/', views.myPage, name="mypage"),
     path('favorite/<restname>', FavoriteView, name='favorite'),
     path('delete_review/<str:pk>', views.deleteReview, name='delete_review'),
+    path('add_comment/<str:pk>', views.addCommentView, name="add_comment"),
+    path('delete_comment/<str:pk>', views.deleteComment, name='delete_comment'),
 
 ]
 

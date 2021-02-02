@@ -6,10 +6,10 @@
     <section class="breadcrumbs">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <h2>Delete Review</h2>
+                <h2>Delete Your Response</h2>
                 <ol>
                     <li><a href="{% url 'home' %}">Home</a></li>
-                    <li>Delete Review</li>
+                    <li>Delete Your Response</li>
                 </ol>
             </div>
         </div>
@@ -17,8 +17,8 @@
     <!-- Inner page container -->
     <section class="inner-page">
         <div class="container">
-            <h5>Are you sure you want to delete this review?</h5>
-            <form action="{% url 'delete_review' review.id %}" method="POST">
+            <h5>Are you sure you want to delete this comment?</h5>
+            <form action="{% url 'delete_comment' comment.id %}" method="POST">
                 {% csrf_token %}
                 <a href="{% url 'restOwner' %}" class="btn btn-sm btn-outline-secondary">Cancel</a>
                 <input type="submit" value="Delete" class="btn btn-sm btn-outline-danger delete-btn">

@@ -60,3 +60,14 @@ class ReviewForm(forms.ModelForm):
                     'body': forms.Textarea(attrs={'class': 'form-conrol'}),
                     'author': forms.TextInput(attrs={'class': 'form-conrol', 'value': '', 'id': 'elder', 'type': 'hidden'}),
                 }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('body', 'author', 'review')
+        widgets = {
+                    'body': forms.Textarea(attrs={'class': 'form-conrol'}),
+                    'author': forms.TextInput(attrs={'class': 'form-conrol', 'value': '', 'id': 'elder', 'type': 'hidden'}),
+                }
+
