@@ -181,8 +181,8 @@
                                     <div class="section-title">
                                         <h2>Reviews</h2>
                                         <p>Your Reviews</p>
-                                        <br>
                                         <ul>
+                                            {% if reviews %}
                                             {% for review in reviews reversed %}
                                             <hr class='white'>
                                             <h3 style="color: #f0cd6c"><b>{{review.author.name}} - {{review.date_added}}</b></h3>
@@ -190,7 +190,7 @@
                                             <a href="{% url 'add_comment' review.id %}"> <button class="btn btn-sm btn-outline-success">Reply to Review</button></a>
                                             <a href="{% url 'delete_review' review.id %}"> <button class="btn btn-sm btn-outline-danger">Delete Review</button></a>
                                             <br>
-                                            {% if review.comment is None %}
+                                            {% if review.comments %}
                                             {% for comment in review.comments.all %}
                                             <hr class='white'>
                                             <h5 style="color: #f0cd6c"><span style="width:25px;display:inline-block"></span> <i class="fas fa-angle-double-right fa-lg"></i><b> {{comment.author.restname}} - {{comment.date_added}}</b></h5>
@@ -200,7 +200,12 @@
                                             {% endif %}
                                             <hr class='white'>
                                             {% endfor %}
+                                            {% else %}
                                         </ul>
+                                        <hr class="white">
+                                        <br>
+                                        <h3>You don't have any reviews yet.</h3>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-3">
@@ -275,6 +280,7 @@
                                     <div class="section-title">
                                         <h2>Orders</h2>
                                         <p>Your Orders</p>
+                                        {% if orders %}
                                         <br>
                                         <div class="row">
                                             <div class="col-lg-8 details order-2 order-lg-1">
@@ -342,6 +348,11 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        {% else %}
+                                        <hr class="white">
+                                        <br>
+                                        <h3>You have no orders yet.</h3>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab-5">

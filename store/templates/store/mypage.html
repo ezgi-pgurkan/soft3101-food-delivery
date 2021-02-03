@@ -64,7 +64,7 @@
                                 <p>Your Orders</p>
                                 <div class="row">
                                     <div class="col-lg-8 details order-2 order-lg-1">
-                                        {% if orders is None %}
+                                        {% if orders %}
                                         <br>
                                         <table cellpadding="5" style="border: 1px solid white; text-align: center">
                                             <tr style="border: 1px solid white;">
@@ -97,7 +97,6 @@
                                                 </th>
                                             </tr>
                                             {% for order in orders reversed %}
-                                            {% if order.complete == True %}
                                             <tr style="border: 1px solid white;">
                                                 <td>
                                                     <h6 style="font-size: 17px">{{order.customer.name}}</h6>
@@ -127,7 +126,6 @@
                                                     <h6 style="font-size: 14px">Total: ${{order.get_cart_total|floatformat:2}}</h6>
                                                 </td>
                                             <tr>
-                                                {% endif %}
                                                 {% endfor %}
                                         </table>
                                         {% else %}
@@ -146,14 +144,14 @@
                                 <h2>Reviews</h2>
                                 <p>Your Reviews</p>
                                 <ul>
-                                    {% if reviews is None %}
+                                    {% if reviews %}
                                     {% for review in reviews reversed %}
                                     <br>
                                     <hr class='white'>
                                     <h2 style="color: #f0cd6c">{{review.restaurant.restname}}</h2>
                                     <h3 style="color: #f0cd6c"><b>{{review.author.name}} - {{review.date_added}}</b></h3>
                                     <h6>{{review.body}}</h6>
-                                    {% if review.comment is None %}
+                                    {% if review.comments %}
                                     {% for comment in review.comments.all %}
                                     <hr class='white'>
                                     <h5 style="color: #f0cd6c"><span style="width:25px;display:inline-block"></span> <i class="fas fa-angle-double-right fa-lg"></i><b> {{comment.author.restname}} - {{comment.date_added}}</b></h5>

@@ -235,6 +235,38 @@ def store(request, restname):
     return render(request, 'store/store.html', context)
 
 
+#customer's cart
+def cart(request, restname):
+    restaurant = get_object_or_404(Restaurant, restname=restname)
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items # we'll set that to the logged in user 
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0,'shipping': False}
+
+    context = {'items':items, 'order':order, 'cartItems': cartItems, 'restaurant':restaurant} #and we need to pass that in
+    return render(request, 'store/cart.html', context)
+
+
+#customer checkout
+def checkout(request, restname):
+    restaurant = get_object_or_404(Restaurant, restname=restname)
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items # we'll set that to the logged in user 
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0, 'shipping': False}
+
+    context = {'items':items, 'order':order, 'cartItems': cartItems, 'restaurant':restaurant}
+    return render(request, 'store/checkout.html', context)
+
+
 #update order items in cart
 @canorder(allowed_roles=['customer'])
 def updateItem(request):
@@ -374,7 +406,7 @@ def myPage(request):
     customer = request.user.customer
 
     #customer's orders
-    orders=Order.objects.filter(customer=customer)
+    orders=Order.objects.filter(customer=customer, complete=True)
 
     #customer's reviews
     reviews=Review.objects.filter(author=customer)
@@ -451,6 +483,7 @@ def restaurantOwnerDashboard(request):
 
     #to display restaurant's reviews
     reviews =Review.objects.filter(restaurant=restaurant)
+
 
     context={'restaurant': restaurant,  'products': products, 'orders': orders, 'reviews': reviews}
     return render(request, 'store/restaurant-owner-dashboard.html', context)

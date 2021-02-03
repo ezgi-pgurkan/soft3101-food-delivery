@@ -17,18 +17,23 @@
     <!-- Inner page container -->
     <section class="inner-page">
         <div class="container">
-            <a href="{% url 'cart' %}">
-                <img src="{% static 'images/cart2.png' %}" height="50" weight="50">
+            <div style="float: right;">
+                <a href="{% url 'cart' restaurant.restname %}">
+                    <img src="{% static 'images/cart.png' %}" height="50" weight="50">
+                </a>
+                <br>
+                <h6 style="float: right" id="cart-total">Items: {{cartItems}}</h6>
+            </div>
+            <a href="{% url 'store' restaurant.restname %}">
+                <button class="btn btn-sm btn-outline-light">&#x2190; Continue Shopping</button>
             </a>
-            <p id="cart-total">{{cartItems}}</p>
             <hr>
             <div class="d-flex justify-content-center">
                 <div class="col-lg-6">
                     <div class="box-element">
-                        <h3 style="text-align: center">Your Order</h3>
+                        <h2 style="text-align: center"><b>Your Order</b></h2>
                         <hr>
                         {% for item in items %}
-                        <!-- <h5>From: {{item.product.restaurant.name}}</h5>  HUGE PROBLEM - DONT LET CUSTOMERS ADD PRODUCTS FROM MULTIPLE RESTAURANTS TO A CART -->
                         <div class="cart-row">
                             <section id="menu" class="menu section-bg">
                                 <div class="container">
@@ -39,9 +44,9 @@
                                     <div class="menu-ingredients">
                                         <h4>&#215; {{item.quantity}}</h4>
                                         <div class="quantity">
-                                            <img data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" src="{% static  'images/arrow-up.png' %}" height="20" weight="20">
-                                            <p> </p>
-                                            <img data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}" height="20" weight="20">
+                                            <button data-product="{{item.product.id}}" data-action="add" class="chg-quantity update-cart" style=" border-color: transparent;  color: #cda45e; background-color: transparent; border-radius:50%"><i class="fas fa-sort-up fa-3x"></i></button>
+                                            <h6> </h6>
+                                            <button data-product="{{item.product.id}}" data-action="remove" class="chg-quantity update-cart" style=" border-color: transparent;  color: #cda45e; background-color: transparent; border-radius:50%"><i class="fas fa-caret-down fa-3x"></i></button>
                                         </div>
                                     </div>
                                     <div class="menu-ingredients">
@@ -54,7 +59,7 @@
                         {% endfor %}
                         <hr>
                         <h5 style="text-align: left; width:37%; display: inline-block;">Items: {{order.get_cart_items}}</h5>
-                        <h5 style="text-align: middle; width:31%;  display: inline-block;"> <a href="{% url 'checkout' %}">
+                        <h5 style="text-align: middle; width:31%;  display: inline-block;"> <a href="{% url 'checkout' restaurant.restname %}">
                                 <button class="btn btn-success">Checkout</button>
                             </a></h5>
                         <h5 style="text-align: right; width:30%;  display: inline-block;">Total: ${{order.get_cart_total|floatformat:2}}</h5>
