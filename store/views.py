@@ -212,7 +212,7 @@ def deleteRestaurant(request, pk):
     context={'item': restaurant, 'restaurant': restaurant, 'restUser':restUser, 'emaill':emaill}
     return render(request, 'store/delete-restaurant.html', context)
 
-#!!!!!!!! store shipping address???????
+
 #customer's view of a restaurant page
 @canorder(allowed_roles=['customer'])
 def store(request, restname):

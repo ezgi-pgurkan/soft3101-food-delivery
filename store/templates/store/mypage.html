@@ -44,19 +44,25 @@
                                 <p>Your Favorite Restaurants</p>
                                 <hr class="white">
                                 <br>
+                                <div class="row">
                                 {% for favorite_restaurant in favorite_restaurants %}
-                                <a href="{% url 'store' favorite_restaurant.restname %}">
-                                    <div class="row justify-content-center">
-                                        <img src="{{favorite_restaurant.logo.url}}" height="100">
+                                <div class="col-lg-4">
+                                    <div class="box" data-aos="zoom-in" data-aos-delay="100">
+                                        <a href="{% url 'store' favorite_restaurant.restname %}">
+                                            <div class="row justify-content-center">
+                                                <img src="{{favorite_restaurant.logo.url}}" height="100">
+                                            </div>
+                                            <div class="row justify-content-center">
+                                                <h4> {{favorite_restaurant.restname}}</h4>
+                                            </div>
+                                        </a>
                                     </div>
-                                    <div class="row justify-content-center">
-                                        <h4> {{favorite_restaurant.restname}}</h4>
-                                    </div>
-                                </a>
+                                    <br>
+                                </div>
                                 {% empty %}
                                 <h3>You have no favorite restaurants.</h3>
                                 {% endfor %}
-                            </div>
+                            </div></div>
                         </div>
                         <div class="tab-pane" id="tab-2">
                             <div class="section-title">
