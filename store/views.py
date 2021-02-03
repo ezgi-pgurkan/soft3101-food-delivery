@@ -184,6 +184,9 @@ def createRestaurant(request):
             restaurant.image3=form2.cleaned_data.get('image3')
             restaurant.image4=form2.cleaned_data.get('image4')
             restaurant.image5=form2.cleaned_data.get('image5')
+            restaurant.image6=form2.cleaned_data.get('image6')
+            restaurant.image7=form2.cleaned_data.get('image7')
+            restaurant.image8=form2.cleaned_data.get('image8')
             restaurant.logo=form2.cleaned_data.get('logo')
             restaurant.workingHoursFrom=form2.cleaned_data.get('workingHoursFrom')
             restaurant.workingHoursTo=form2.cleaned_data.get('workingHoursTo')
@@ -199,13 +202,14 @@ def createRestaurant(request):
 @allowed_users(allowed_roles=['admin'])
 def deleteRestaurant(request, pk):
     restaurant=Restaurant.objects.get(userEmail_id=pk)
-    restUser=RegisteredUser.objects.get(userEmail_id=pk)
+    emaill=restaurant.userEmail
+    restUser=RegisteredUser.objects.get(email=emaill)
     if request.method=='POST':
         restaurant.delete()
         restUser.delete()
         return redirect('adminpage')
 
-    context={'item': restaurant, 'restaurant': restaurant, 'restUser':restUser}
+    context={'item': restaurant, 'restaurant': restaurant, 'restUser':restUser, 'emaill':emaill}
     return render(request, 'store/delete-restaurant.html', context)
 
 #!!!!!!!! store shipping address???????
