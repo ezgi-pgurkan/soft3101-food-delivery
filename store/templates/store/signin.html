@@ -31,6 +31,7 @@
                                 {% csrf_token %}
                                 {{ form|crispy }}
                                 <p>Don't have an account? Create one <a href="{% url 'signup' %}">here</a></p>
+                                <p>Forgot password? Reset password <a href="{% url 'reset_password' %}">here</a></p>
                                 <div class="d-flex justify-content-center">
                                     <button type="submit" class="btn btn-success">Sign in</button>
                                 </div>

@@ -17,7 +17,7 @@ class CustomerCreationForm(UserCreationForm):
     surname = forms.CharField(max_length=200)
     city=forms.CharField(widget=forms.Select(choices=CITIES))
     address=forms.CharField(max_length=500)
-    phone = PhoneNumberField(widget=forms.TextInput(attrs={'placeholder': ('Phone')}), label=("Phone number"), required=False)
+    phone = PhoneNumberField(widget=forms.TextInput(attrs={'placeholder': ('Phone')}), label=("Phone number"), required=True)
 
     class Meta:
         model  = RegisteredUser
