@@ -208,7 +208,7 @@ def deleteRestaurant(request, pk):
     context={'item': restaurant, 'restaurant': restaurant, 'restUser':restUser}
     return render(request, 'store/delete-restaurant.html', context)
 
-
+#!!!!!!!! store shipping address???????
 #customer's view of a restaurant page
 @canorder(allowed_roles=['customer'])
 def store(request, restname):
@@ -236,6 +236,7 @@ def store(request, restname):
 
 
 #customer's cart
+@canorder(allowed_roles=['customer'])
 def cart(request, restname):
     restaurant = get_object_or_404(Restaurant, restname=restname)
     if request.user.is_authenticated:
@@ -252,6 +253,7 @@ def cart(request, restname):
 
 
 #customer checkout
+@canorder(allowed_roles=['customer'])
 def checkout(request, restname):
     restaurant = get_object_or_404(Restaurant, restname=restname)
     if request.user.is_authenticated:
@@ -329,6 +331,7 @@ def processOrder(request, restname):
 
 
 #review
+@allowed_users(allowed_roles=['customer'])
 def addReviewView(request, restname):
     rest = get_object_or_404(Restaurant, restname=restname)
     customer=request.user.customer
@@ -402,6 +405,7 @@ def dessert(request):
     return render(request, 'store/dessert.html', context)
 
 #customer's page
+@allowed_users(allowed_roles=['customer'])
 def myPage(request):
     customer = request.user.customer
 
@@ -420,6 +424,7 @@ def myPage(request):
 
 
 #customer's favorite restaurants
+@allowed_users(allowed_roles=['customer'])
 def FavoriteView(request, restname):
     restaurant = get_object_or_404(Restaurant, restname=restname)
     favorited=False
@@ -466,6 +471,7 @@ class PasswordsChangeView(PasswordChangeView):
 
 
 #password succeffully changed message
+@allowed_users(allowed_roles=['admin', 'restaurant', 'customer'])
 def password_success(request):
     return render(request, 'store/password_success.html', {})
 
@@ -542,19 +548,23 @@ def deleteProduct(request, pk):
 
 
 #restaurant owner deletes a review about their restaurant
-@allowed_users(allowed_roles=['restaurant'])
+@allowed_users(allowed_roles=['restaurant', 'customer'])
 def deleteReview(request, pk):
     review = Review.objects.get(id=pk)
     if request.method == "POST":
         review.delete()
-        #bak!!!
-        return redirect('restOwner') 
+        if request.user.is_customer==True:
+            return redirect('mypage')
+           
+        if request.user.is_restaurant==True:
+            return redirect('restOwner')
 
     context = {'review': review}
     return render(request, 'store/delete_review.html', context)
 
 
 #restaurant owner replies to a review about their restaurant
+@allowed_users(allowed_roles=['restaurant'])
 def addCommentView(request, pk):
     restaurant=request.user.restaurant
     review = Review.objects.get(id=pk)
@@ -573,6 +583,7 @@ def addCommentView(request, pk):
 
 
 #restaurant owner deletes their reply to a review about their restaurant
+@allowed_users(allowed_roles=['restaurant'])
 def deleteComment(request, pk):
     comment = Comment.objects.get(id=pk)
     if request.method == "POST":

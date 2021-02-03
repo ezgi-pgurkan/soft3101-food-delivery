@@ -146,11 +146,11 @@
                                 <ul>
                                     {% if reviews %}
                                     {% for review in reviews reversed %}
-                                    <br>
                                     <hr class='white'>
                                     <h2 style="color: #f0cd6c">{{review.restaurant.restname}}</h2>
                                     <h3 style="color: #f0cd6c"><b>{{review.author.name}} - {{review.date_added}}</b></h3>
                                     <h6>{{review.body}}</h6>
+                                    <a href="{% url 'delete_review' review.id %}"> <button class="btn btn-sm btn-outline-danger">Delete Review</button></a>
                                     {% if review.comments %}
                                     {% for comment in review.comments.all %}
                                     <hr class='white'>

@@ -71,4 +71,3 @@ class CommentForm(forms.ModelForm):
                     'body': forms.Textarea(attrs={'class': 'form-conrol'}),
                     'author': forms.TextInput(attrs={'class': 'form-conrol', 'value': '', 'id': 'elder', 'type': 'hidden'}),
                 }
-
